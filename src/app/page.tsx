@@ -6,7 +6,6 @@ import WhoWeAre from '@/sections/WhoWeAre';
 import Depoiments from '@/sections/Depoiments';
 import Contact from '@/sections/Contact';
 import { IPost } from '@/interfaces/post.interface';
-import { notFound } from 'next/navigation';
 import api from '@/services/api';
 
 const getLatestPosts = async () => {
@@ -23,10 +22,6 @@ const getLatestPosts = async () => {
 
 export default async function Home() {
   const lastestPosts: IPost[] = await getLatestPosts();
-
-  if (!lastestPosts || lastestPosts.length === 0) {
-    notFound();
-  }
 
   return (
     <>

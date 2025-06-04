@@ -7,7 +7,6 @@ import Depoiments from '@/sections/Depoiments';
 import Contact from '@/sections/Contact';
 import { IPost } from '@/interfaces/post.interface';
 import api from '@/services/api';
-import Highlights from '@/components/Highlights';
 
 const getLatestPosts = async () => {
   try {

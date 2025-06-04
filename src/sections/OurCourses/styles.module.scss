@@ -208,6 +208,11 @@
       margin-bottom: 24px;
     }
   }
+
+  button {
+    background-color: transparent;
+    border: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {

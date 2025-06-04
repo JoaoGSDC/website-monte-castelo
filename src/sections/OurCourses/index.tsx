@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './styles.module.scss';
 import button from '../../styles/button.module.scss';
 import { GiPistolGun, GiPoliceOfficerHead } from 'react-icons/gi';
@@ -6,6 +8,7 @@ import { FaTruck } from 'react-icons/fa6';
 import Link from 'next/link';
 import Subtitle from '@/components/Subtitle';
 import { AiFillAlert } from 'react-icons/ai';
+import { scrollToSection } from '@/utils/scrollToSection';
 
 export default function OurCourses() {
   return (
@@ -37,7 +40,9 @@ export default function OurCourses() {
               <h1>Formação de vigilantes</h1>
               <hr />
               <p>Capacite-se em vigilância, segurança patrimonial, defesa pessoal e uso de armamento.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
 
@@ -52,7 +57,9 @@ export default function OurCourses() {
               <h1>Reciclagem de vigilantes</h1>
               <hr />
               <p>Reforce habilidades em vigilância, defesa pessoal e uso de armamentos.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
 
@@ -67,7 +74,9 @@ export default function OurCourses() {
               <h1>Operador de CFTV</h1>
               <hr />
               <p>Aprenda a operar câmeras PTZ e equipamentos BOSCH com simulações práticas.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
 
@@ -82,7 +91,9 @@ export default function OurCourses() {
               <h1>Supervisão, Chefia e Segurança</h1>
               <hr />
               <p>Aprenda liderança, análise de risco e técnicas para supervisão eficiente.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
 
@@ -96,7 +107,9 @@ export default function OurCourses() {
               <h1>Escolta Armada</h1>
               <hr />
               <p>Capacite-se em prevenção, reação e uso de armamentos específicos.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
 
@@ -110,7 +123,9 @@ export default function OurCourses() {
               <h1>Transporte de Valores</h1>
               <hr />
               <p>Aprenda segurança, reação e práticas com armamentos e carro-forte.</p>
-              <Link href="#">Ver mais +</Link>
+              <button onClick={() => scrollToSection('contato')}>
+                <Link href="#">Ver mais +</Link>
+              </button>
             </div>
           </div>
         </div>
@@ -119,7 +134,9 @@ export default function OurCourses() {
       <div className={styles.contact}>
         <h2>Seja um profissional destacado</h2>
         <h1>{`(19) 9 7410-2924`}</h1>
-        <button className={button.primaryAlternative}>saiba mais</button>
+        <button className={button.primaryAlternative} onClick={() => scrollToSection('contato')}>
+          saiba mais
+        </button>
       </div>
     </section>
   );

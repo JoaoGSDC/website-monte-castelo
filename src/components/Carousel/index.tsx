@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
+import { scrollToSection } from '@/utils/scrollToSection';
 
 interface CarouselItem {
   image: string;
@@ -34,8 +35,12 @@ const Carousel = ({ items }: { items: CarouselItem[] }) => {
                   <h1 className={styles.title}>{item.title}</h1>
                   <h1 className={styles.titleMarked}>{item.titleMarked}</h1>
                   <div className={styles.buttonsContainer}>
-                    <button className={styles.buttonPrimary}>{item.buttonPrimary}</button>
-                    <button className={styles.buttonSecondary}>{item.buttonSecondary}</button>
+                    <button className={styles.buttonPrimary} onClick={() => scrollToSection('quem-somos')}>
+                      {item.buttonPrimary}
+                    </button>
+                    <button className={styles.buttonSecondary} onClick={() => scrollToSection('contato')}>
+                      {item.buttonSecondary}
+                    </button>
                   </div>
                 </div>
               </div>

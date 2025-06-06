@@ -20,7 +20,20 @@ const LastBlogPosts: React.FC<LastBlogPostsProps> = ({ posts }) => {
 
       <div className={styles.cards}>
         {posts?.map((post) => (
-          <Link href={'#'} key={post?._id} className={styles.card}>
+          <Link
+            href={`/blog/${
+              post.title
+                .toLowerCase()
+                .normalize('NFD') // separa letras de acentos
+                .replace(/[\u0300-\u036f]/g, '') // remove acentos
+                .replace(/[^\w\s-]/g, '') // remove caracteres especiais
+                .trim()
+                .replace(/\s+/g, '-') // substitui espaços por hífens
+            }
+                  `}
+            key={post?._id}
+            className={styles.card}
+          >
             <figure className={styles.figure}>
               <Image
                 src={post?.image}

@@ -3,18 +3,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { FaFortAwesome } from 'react-icons/fa6';
-import Highlights from '@/components/Highlights';
 
 const WhoWeAre: React.FC = () => {
-  const items = [
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-    { image: '/images/teste.jpg', video: '/videos/Destaque-1.mp4' },
-  ];
-
   return (
     <section id="quem-somos" className={styles.container}>
       <Subtitle text="Quem somos" />
@@ -52,8 +42,6 @@ const WhoWeAre: React.FC = () => {
           </ul>
         </div>
       </div>
-
-      <Highlights items={items} />
     </section>
   );
 };

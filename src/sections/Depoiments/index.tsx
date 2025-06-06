@@ -6,6 +6,7 @@ import button from '../../styles/button.module.scss';
 import { FaArrowLeft, FaArrowRight, FaRegCirclePlay, FaStar } from 'react-icons/fa6';
 import Modal from '@/components/Modal';
 import useEmblaCarousel from 'embla-carousel-react';
+import Highlights from '@/components/Highlights';
 
 const Depoiments: React.FC = () => {
   const [openModal, setOpenModal] = React.useState(false);
@@ -31,6 +32,13 @@ const Depoiments: React.FC = () => {
 
   const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
   const scrollNext = () => emblaApi && emblaApi.scrollNext();
+
+  const items = [
+    { image: '/images/depoimento-1.jpg', video: '/videos/depoimento-1.mp4' },
+    { image: '/images/depoimento-2.jpg', video: '/videos/depoimento-2.mp4' },
+    { image: '/images/depoimento-3.jpg', video: '/videos/depoimento-3.mp4' },
+    { image: '/images/depoimento-4.jpg', video: '/videos/depoimento-4.mp4' },
+  ];
 
   return (
     <>
@@ -101,6 +109,8 @@ const Depoiments: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <Highlights items={items} />
 
         <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
           <iframe

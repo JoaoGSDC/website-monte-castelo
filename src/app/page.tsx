@@ -37,6 +37,14 @@ export default async function Home() {
                 buttonPrimary: 'Saiba mais',
                 buttonSecondary: 'Entrar em contato',
               },
+              {
+                image: '/images/background-4.png',
+                hollowText: 'Excelência',
+                title: 'na formação de',
+                titleMarked: 'vigilantes',
+                buttonPrimary: 'Saiba mais',
+                buttonSecondary: 'Entrar em contato',
+              },
             ]}
           />
           <OurCourses />

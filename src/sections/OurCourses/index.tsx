@@ -5,10 +5,61 @@ import button from '../../styles/button.module.scss';
 import { GiPistolGun, GiPoliceOfficerHead } from 'react-icons/gi';
 import { PiCertificateFill, PiSecurityCameraFill } from 'react-icons/pi';
 import { FaTruck } from 'react-icons/fa6';
-import Link from 'next/link';
 import Subtitle from '@/components/Subtitle';
 import { AiFillAlert } from 'react-icons/ai';
 import { scrollToSection } from '@/utils/scrollToSection';
+import CardFlip from '@/components/CardFlip';
+
+const courses = [
+  {
+    icon: <GiPoliceOfficerHead />,
+    title: 'Formação de vigilantes',
+    subtitle: 'Excelência em Segurança Privada',
+    description: 'Capacite-se em vigilância, segurança patrimonial, defesa pessoal e uso de armamento.',
+    backDescription:
+      'Formação profissional para atuar na segurança privada, com foco em vigilância patrimonial, segurança de estabelecimentos, defesa pessoal e uso de armamentos letais e não letais. Prepare-se para proteger pessoas e patrimônios com responsabilidade e técnica.',
+  },
+  {
+    icon: <PiCertificateFill />,
+    title: 'Reciclagem de vigilantes',
+    subtitle: 'Atualização e Recapacitação em Segurança Privada',
+    description: 'Reforce habilidades em vigilância, defesa pessoal e uso de armamentos.',
+    backDescription:
+      'Atualização obrigatória para vigilantes em atividade. Aulas teóricas e práticas com foco em vigilância patrimonial, defesa pessoal e uso de armamentos. Reforce suas habilidades e mantenha-se apto para atuar com excelência na segurança privada.',
+  },
+  {
+    icon: <PiSecurityCameraFill />,
+    title: 'Operador de CFTV',
+    subtitle: 'Formação em Operação de Sistemas de Monitoramento',
+    description: 'Aprenda a operar câmeras PTZ e equipamentos BOSCH com simulações práticas.',
+    backDescription:
+      'Capacitação para operar sistemas de vigilância eletrônica com câmeras PTZ e equipamentos BOSCH. Inclui aulas práticas com rádio comunicação, simulações de pronta resposta e controle por mesa KBD universal.',
+  },
+  {
+    icon: <AiFillAlert />,
+    title: 'Supervisão, Chefia e Segurança',
+    subtitle: 'Liderança e Gestão em Segurança',
+    description: 'Aprenda liderança, análise de risco e técnicas para supervisão eficiente.',
+    backDescription:
+      'Curso voltado à formação de líderes na segurança privada. Aborda análise de risco, planejamento estratégico, tipos de liderança, motivação de equipe, regras de segurança, manuseio e vistoria de armamentos.',
+  },
+  {
+    icon: <GiPistolGun />,
+    title: 'Escolta Armada',
+    subtitle: 'Preparação para Operações de Escolta Armada',
+    description: 'Capacite-se em prevenção, reação e uso de armamentos específicos.',
+    backDescription:
+      'Formação para atuar na proteção de cargas e valores com ações preventivas e reativas. Treinamento com pistola .380 e escopeta calibre 12, seguindo os padrões da segurança armada profissional.',
+  },
+  {
+    icon: <FaTruck />,
+    title: 'Transporte de Valores',
+    subtitle: 'Formação Especializada em Transporte de Valores',
+    description: 'Aprenda segurança, reação e práticas com armamentos e carro-forte.',
+    backDescription:
+      'Capacitação para atuar em carros-fortes com técnicas de prevenção e reação a ataques. Treinamento com pistola .380, escopeta calibre 12 e prática em veículo blindado.',
+  },
+];
 
 export default function OurCourses() {
   return (
@@ -29,105 +80,16 @@ export default function OurCourses() {
         </div>
 
         <div className={styles.courses}>
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <GiPoliceOfficerHead />
-              <span>☆</span>
-            </div>
-
-            <div className={styles.courseContent}>
-              <h4>Excelência em Segurança Privada</h4>
-              <h1>Formação de vigilantes</h1>
-              <hr />
-              <p>Capacite-se em vigilância, segurança patrimonial, defesa pessoal e uso de armamento.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <PiCertificateFill />
-              <span>☆</span>
-            </div>
-
-            <div className={styles.courseContent}>
-              <h4>Atualização e Recapacitação em Segurança Privada</h4>
-              <h1>Reciclagem de vigilantes</h1>
-              <hr />
-              <p>Reforce habilidades em vigilância, defesa pessoal e uso de armamentos.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <PiSecurityCameraFill />
-              <span>☆</span>
-            </div>
-
-            <div className={styles.courseContent}>
-              <h4>Formação em Operação de Sistemas de Monitoramento</h4>
-              <h1>Operador de CFTV</h1>
-              <hr />
-              <p>Aprenda a operar câmeras PTZ e equipamentos BOSCH com simulações práticas.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <AiFillAlert />
-              <span>☆</span>
-            </div>
-
-            <div className={styles.courseContent}>
-              <h4>Liderança e Gestão em Segurança</h4>
-              <h1>Supervisão, Chefia e Segurança</h1>
-              <hr />
-              <p>Aprenda liderança, análise de risco e técnicas para supervisão eficiente.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <GiPistolGun />
-              <span>☆</span>
-            </div>
-            <div className={styles.courseContent}>
-              <h4>Preparação para Operações de Escolta Armada</h4>
-              <h1>Escolta Armada</h1>
-              <hr />
-              <p>Capacite-se em prevenção, reação e uso de armamentos específicos.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.course}>
-            <div className={styles.image}>
-              <FaTruck />
-              <span>☆</span>
-            </div>
-            <div className={styles.courseContent}>
-              <h4>Formação Especializada em Transporte de Valores</h4>
-              <h1>Transporte de Valores</h1>
-              <hr />
-              <p>Aprenda segurança, reação e práticas com armamentos e carro-forte.</p>
-              <button onClick={() => scrollToSection('contato')}>
-                <Link href="#">Ver mais +</Link>
-              </button>
-            </div>
-          </div>
+          {courses.map((course, idx) => (
+            <CardFlip
+              key={idx}
+              icon={course.icon}
+              title={course.title}
+              subtitle={course.subtitle}
+              description={course.description}
+              backDescription={course.backDescription}
+            />
+          ))}
         </div>
       </div>
 

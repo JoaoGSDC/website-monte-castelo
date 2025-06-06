@@ -1,0 +1,147 @@
+.card {
+  flex: 1 0 30%;
+  height: 420px;
+  min-width: 300px;
+  perspective: 1000px;
+
+  .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  &.flipped .inner {
+    transform: rotateY(180deg);
+  }
+
+  .front,
+  .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: var(--white);
+    border: 1px solid #e8e8e8;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+  }
+
+  .front {
+    z-index: 2;
+
+    .image {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      svg {
+        width: 70px;
+        height: 70px;
+        fill: var(--main);
+      }
+
+      span {
+        font-family: Barlow Condensed, sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 70px;
+        line-height: 70px;
+        color: #f2f3f3;
+      }
+    }
+
+    .courseContent {
+      display: flex;
+      row-gap: 16px;
+      flex-direction: column;
+
+      h4 {
+        font-size: 13px;
+        line-height: 20px;
+        font-weight: 500;
+        color: #646c71;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-family: Barlow, sans-serif;
+      }
+
+      h1 {
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: 700;
+        text-transform: uppercase;
+        min-height: 3em;
+      }
+
+      hr {
+        border: none;
+        border-bottom: 1px solid #e8e8e8;
+      }
+
+      p {
+        line-height: 1.5em;
+        min-height: 4.5em;
+      }
+
+      button {
+        align-self: flex-start;
+        background-color: transparent;
+        color: var(--main);
+        border: none;
+        padding: 0;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .back {
+    transform: rotateY(180deg);
+    background-color: var(--main);
+    color: white;
+
+    .courseContent {
+      display: flex;
+      row-gap: 16px;
+      flex-direction: column;
+
+      h1 {
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: 700;
+        text-transform: uppercase;
+        min-height: 3em;
+      }
+
+      hr {
+        border: none;
+        border-bottom: 1px solid #e8e8e8;
+      }
+
+      p {
+        color: var(--white);
+        line-height: 1.5em;
+        min-height: 4.5em;
+      }
+
+      button {
+        align-self: flex-start;
+        background-color: transparent;
+        color: var(--white);
+        border: none;
+        padding: 0;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+}

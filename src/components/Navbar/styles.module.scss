@@ -106,17 +106,28 @@
         border-right: 1px solid var(--border);
         cursor: pointer;
 
-        svg {
-          path {
-            fill: var(--white) !important;
-            transition: 0.3s ease;
-          }
-        }
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 32px;
+          cursor: pointer;
 
-        &:hover {
           svg {
+            font-size: 1rem;
+
             path {
-              fill: var(--main) !important;
+              fill: var(--white) !important;
+              transition: 0.3s ease;
+            }
+          }
+
+          &:hover {
+            svg {
+              path {
+                fill: var(--main) !important;
+              }
             }
           }
         }

@@ -12,15 +12,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Missing search query' }, { status: 400 });
     }
 
-    const words = search
-      .trim()
-      .split(/\s+/)
-      .map((word) => new RegExp(word, 'i'));
-
     const posts = await db
       .collection('posts')
       .find({
-        title: { $in: words.map((regex) => ({ $regex: regex })) },
+        title: {
+          $regex: new RegExp(search, 'i'),
+        },
       })
       .toArray();
 

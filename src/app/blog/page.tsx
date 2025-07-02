@@ -24,7 +24,7 @@ const fetchPosts = async (search?: string) => {
 };
 
 const Blog = async ({ searchParams }: any) => {
-  const search = searchParams.search || '';
+  const search = searchParams?.search ?? '';
   const content = await fetchPosts(search);
 
   return (

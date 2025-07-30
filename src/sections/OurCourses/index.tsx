@@ -21,7 +21,7 @@ const courses = [
   },
   {
     icon: <PiCertificateFill />,
-    title: 'Reciclagem de vigilantes',
+    title: 'Atualização de vigilantes',
     subtitle: 'Atualização e Recapacitação em Segurança Privada',
     description: 'Reforce habilidades em vigilância, defesa pessoal e uso de armamentos.',
     backDescription:

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { scrollToSection } from '@/utils/scrollToSection';
+import Link from 'next/link';
 
 interface CarouselItem {
   image: string;
@@ -38,9 +39,14 @@ const Carousel = ({ items }: { items: CarouselItem[] }) => {
                     <button className={styles.buttonPrimary} onClick={() => scrollToSection('quem-somos')}>
                       {item.buttonPrimary}
                     </button>
-                    <button className={styles.buttonSecondary} onClick={() => scrollToSection('contato')}>
+                    <Link
+                      href="https://forms.gle/c3JLdbkw3S5rPWZ39"
+                      className={styles.buttonSecondary}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {item.buttonSecondary}
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

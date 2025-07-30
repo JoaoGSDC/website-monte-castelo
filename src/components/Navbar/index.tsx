@@ -97,13 +97,49 @@ const Navbar = () => {
                 <p>INÍCIO</p>
               </Link>
 
-              <a onClick={() => scrollToSection('quem-somos')}>
-                <p>QUEM SOMOS</p>
-              </a>
+              <div className={styles.dropdown}>
+                <a onClick={() => scrollToSection('quem-somos')}>
+                  <p>SOBRE NÓS</p>
+                </a>
 
-              <a onClick={() => scrollToSection('cursos')}>
-                <p>CURSOS</p>
-              </a>
+                <div className={styles.dropdownContent}>
+                  <Link href="/quem-somos">
+                    <p>Quem somos</p>
+                  </Link>
+                </div>
+              </div>
+
+              <div className={styles.dropdown}>
+                <a onClick={() => scrollToSection('cursos')}>
+                  <p>CURSOS</p>
+                </a>
+
+                <div className={styles.dropdownContent}>
+                  <Link href="/cursos/formacao-de-vigilantes">
+                    <p>Formação de vigilantes</p>
+                  </Link>
+
+                  <Link href="/cursos/atualizacao-de-vigilantes">
+                    <p>Atualização de vigilantes</p>
+                  </Link>
+
+                  <Link href="/cursos/operador-de-cftv">
+                    <p>Operador de CFTV</p>
+                  </Link>
+
+                  <Link href="/cursos/supervisao-chefia-e-seguranca">
+                    <p>Supervisão, Chefia e Segurança</p>
+                  </Link>
+
+                  <Link href="/cursos/escolta-armada">
+                    <p>Escolta Armada</p>
+                  </Link>
+
+                  <Link href="/cursos/transporte-de-valores">
+                    <p>Transporte de Valores</p>
+                  </Link>
+                </div>
+              </div>
 
               <Link href="/blog">
                 <p>BLOG</p>

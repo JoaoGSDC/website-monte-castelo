@@ -1,8 +1,10 @@
 import { Barlow } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import type { Metadata } from 'next';
+import '../styles/globals.css';
 import '../styles/globals.scss';
 import Footer from '@/components/Footer';
+import AttentionDialog from '@/components/AttentionDialog';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: 'Academia Monte Castelo',
     title: 'Academia Monte Castelo',
-    description: 'Curso de formação, extensão e reciclagem de vigilantes',
+    description: 'Curso de formação, extensão e atualização de vigilantes',
     url: 'http://academiamontecastelo.com.br/',
     images: [
       {
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Academia Monte Castelo',
-    description: 'Curso de formação, extensão e reciclagem de vigilantes',
+    description: 'Curso de formação, extensão e atualização de vigilantes',
     images: ['http://academiamontecastelo.com.br/icon512x512.png'],
   },
 };
@@ -43,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body>
+        <AttentionDialog />
         <Navbar />
         {children}
         <Footer />

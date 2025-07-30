@@ -1,0 +1,56 @@
+.container {
+  background-color: var(--background-alternative);
+  padding: 2rem;
+  border-radius: 0px;
+  border: none;
+
+  h1 {
+    font-family: Barlow, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 23px;
+    letter-spacing: 1px;
+    color: var(--main);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  h3 {
+    font-family: Barlow, sans-serif;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    text-transform: none;
+    font-style: normal;
+  }
+
+  .button {
+    cursor: pointer;
+    padding: 16px;
+    color: var(--background-alternative);
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid var(--text-tertiary);
+    height: 56px;
+    transition: all 0.3s ease;
+    background-color: var(--white);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: var(--background-alternative);
+      color: var(--white);
+    }
+  }
+
+  svg {
+    path {
+      color: var(--white);
+    }
+  }
+}

@@ -167,23 +167,23 @@ const Navbar = () => {
             <p>INÍCIO</p>
           </Link>
 
-          <a
+          <Link
             onClick={() => {
-              scrollToSection('quem-somos');
               toggleMenu();
             }}
+            href="/quem-somos"
           >
             <p>QUEM SOMOS</p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             onClick={() => {
-              scrollToSection('cursos');
               toggleMenu();
             }}
+            href="/cursos/formacao-de-vigilantes"
           >
             <p>CURSOS</p>
-          </a>
+          </Link>
 
           <Link href="/blog" onClick={toggleMenu}>
             <p>BLOG</p>

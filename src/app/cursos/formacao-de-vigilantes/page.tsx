@@ -6,11 +6,10 @@ import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
 
 const IMAGES = [
-  '/images/cursos-1.jpeg',
+  '/images/cursos/curso-1.jpg',
+  '/images/cursos/curso-3.jpg',
+  '/images/cursos/curso-2.jpg',
   '/images/cursos-2.jpeg',
-  '/images/cursos-3.jpeg',
-  '/images/cursos-4.jpeg',
-  '/images/cursos-5.jpeg',
 ];
 
 export default function FormacaoDeVigilantesPage() {

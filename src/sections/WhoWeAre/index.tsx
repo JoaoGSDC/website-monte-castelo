@@ -15,7 +15,7 @@ const WhoWeAre: React.FC = () => {
           <div className={styles.form} />
 
           <figure>
-            <Image src="/images/teste.jpg" alt="Descrição da imagem" layout="responsive" width={500} height={300} />
+            <Image src="/images/cursos-5.jpeg" alt="stand-de-tiro" layout="responsive" width={500} height={300} />
           </figure>
         </div>
 

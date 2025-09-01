@@ -15,7 +15,9 @@
     row-gap: 32px;
     background-color: var(--background-alternative);
     padding: 200px;
-    background-image: url('/images/background-2.jpg');
+    background-image: url('/images/aula.jpg');
+    background-repeat: no-repeat;
+    background-position: center left;
     background-blend-mode: soft-light;
 
     button {
@@ -67,7 +69,9 @@
       width: 25%;
       padding: 48px;
       row-gap: 16px;
-      background-image: url(/images/background-3.png);
+      background-image: url(/images/background-5.jpg);
+      background-position: top;
+      background-size: cover;
       background-blend-mode: soft-light;
       flex-direction: column;
 

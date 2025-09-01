@@ -115,7 +115,7 @@ const Depoiments: React.FC = () => {
         <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
           <iframe
             id="iframe"
-            src="https://www.youtube.com/embed/JosO2gnv0A8?si=4E0cx084YtZrLH_s"
+            src="/videos/video-institucional.mp4"
             title="Academia Monte Castelo"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

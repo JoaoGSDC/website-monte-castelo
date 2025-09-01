@@ -49,7 +49,9 @@ const LastBlogPosts: React.FC<LastBlogPostsProps> = ({ posts }) => {
               <div className={styles.block}>
                 <FaRegNewspaper />
               </div>
-              <h2 className={styles.title}>{post?.title}</h2>
+              <h2 title={post?.title} className={styles.title}>
+                {post?.title}
+              </h2>
               <p className={styles.excerpt}>{post?.excerpt}</p>
             </div>
           </Link>

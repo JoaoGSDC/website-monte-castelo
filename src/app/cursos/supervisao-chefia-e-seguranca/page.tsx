@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Image from 'next/image';
 import styles from '../styles.module.scss';
@@ -40,7 +41,7 @@ export default function SupervisaoChefiaESegurancaPage() {
               armamentos.
             </p>
 
-            <div className={styles.carouselContainer}>
+            {/* <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -64,7 +65,7 @@ export default function SupervisaoChefiaESegurancaPage() {
                   <CarouselNext />
                 </Carousel>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

@@ -42,13 +42,6 @@ const Footer: React.FC = () => {
             </p>
           </a>
 
-          <a href="skype:contato2014montecastelo?chat">
-            <p className={styles.option}>
-              <SlSocialSkype />
-              Skype
-            </p>
-          </a>
-
           <a href="mailto:contato@academiamontecastelo.com.br">
             <p className={styles.option}>
               <AiOutlineMail />

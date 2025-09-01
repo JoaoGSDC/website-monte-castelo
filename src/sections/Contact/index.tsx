@@ -1,21 +1,21 @@
-import React from 'react';
 import styles from './styles.module.scss';
 import button from '../../styles/button.module.scss';
 import Subtitle from '@/components/Subtitle';
+import { sendEmail } from '@/app/contact/actions';
 
-const Contact: React.FC = () => {
+export default function Contact() {
   return (
     <section id="contato" className={styles.container}>
       <Subtitle text="Contato" />
       <h1>Entre em contato conosco</h1>
 
       <div className={styles.content}>
-        <form className={styles.form}>
-          <input type="text" placeholder="Nome" />
-          <input type="tel" placeholder="Telefone" />
-          <input type="email" placeholder="E-mail" />
-          <input type="text" placeholder="Assunto" />
-          <textarea placeholder="Mensagem" />
+        <form className={styles.form} action={sendEmail}>
+          <input type="text" name="name" placeholder="Nome *" required />
+          <input type="tel" name="phone" placeholder="Telefone *" required />
+          <input type="email" name="email" placeholder="E-mail *" required />
+          <input type="text" name="subject" placeholder="Assunto" />
+          <textarea name="message" placeholder="Mensagem *" required />
 
           <button type="submit" className={button.primaryVariant}>
             Enviar
@@ -32,6 +32,4 @@ const Contact: React.FC = () => {
       </div>
     </section>
   );
-};
-
-export default Contact;
+}

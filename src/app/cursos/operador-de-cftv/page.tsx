@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Image from 'next/image';
 import styles from '../styles.module.scss';
@@ -39,7 +40,7 @@ export default function OperadorDeCftvPage() {
               aulas práticas com rádio comunicação, simulações de pronta resposta e controle por mesa KBD universal.
             </p>
 
-            <div className={styles.carouselContainer}>
+            {/* <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -63,7 +64,7 @@ export default function OperadorDeCftvPage() {
                   <CarouselNext />
                 </Carousel>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

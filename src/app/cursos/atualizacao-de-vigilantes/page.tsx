@@ -6,11 +6,11 @@ import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
 
 const IMAGES = [
-  '/images/cursos-1.jpeg',
-  '/images/cursos-2.jpeg',
+  '/images/cursos/curso-4.jpg',
   '/images/cursos-3.jpeg',
-  '/images/cursos-4.jpeg',
-  '/images/cursos-5.jpeg',
+  '/images/cursos/curso-6.jpg',
+  '/images/cursos/curso-7.jpg',
+  '/images/cursos/curso-8.jpg',
 ];
 
 export default function AtualizacaoDeVigilantesPage() {

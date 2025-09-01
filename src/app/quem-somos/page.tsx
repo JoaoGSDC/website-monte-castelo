@@ -3,11 +3,49 @@ import styles from './styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const IMAGES = [
-  '/images/cursos-1.jpeg',
-  '/images/cursos-2.jpeg',
-  '/images/cursos-3.jpeg',
-  '/images/cursos-4.jpeg',
-  '/images/cursos-5.jpeg',
+  // FRENTE
+  '/images/places/frente.jpg',
+
+  // ENTRADA
+  '/images/places/entrada-1.jpg',
+  '/images/places/entrada-2.jpg',
+  '/images/places/entrada-3.jpg',
+
+  // STAND DE TIRO
+  '/images/places/stand-de-tiro-7.jpg',
+  '/images/places/stand-de-tiro-8.jpg',
+  '/images/places/stand-de-tiro-1.jpg',
+  '/images/places/stand-de-tiro-2.jpg',
+  '/images/places/stand-de-tiro-3.jpg',
+  '/images/places/stand-de-tiro-4.jpg',
+  '/images/places/stand-de-tiro-5.jpg',
+  '/images/places/stand-de-tiro-6.jpg',
+
+  // RECEPÇÃO
+  '/images/places/recepcao-1.jpg',
+  '/images/places/recepcao-2.jpg',
+
+  // SALA DE AULA
+  '/images/places/sala-de-aula-1.jpg',
+  '/images/places/sala-de-aula-2.jpg',
+  '/images/places/sala-de-aula-3.jpg',
+
+  // TIRO VIRTUAL
+  '/images/places/tiro-virtual-1.jpg',
+  '/images/places/tiro-virtual-2.jpg',
+  '/images/places/tiro-virtual-3.jpg',
+
+  // ACADEMIA
+  '/images/places/academia-1.jpg',
+  '/images/places/academia-2.jpg',
+  '/images/places/academia-3.jpg',
+  '/images/places/academia-4.jpg',
+  '/images/places/academia-5.jpg',
+  '/images/places/academia-6.jpg',
+
+  // REFEITORIO
+  '/images/places/refeitorio-1.jpg',
+  '/images/places/refeitorio-2.jpg',
 ];
 
 export default function QuemSomosPage() {
@@ -19,7 +57,13 @@ export default function QuemSomosPage() {
           <h2>Excelência em formação de profissionais de segurança</h2>
         </div>
         <div className={styles.headerImage}>
-          <Image src="/images/blog-cover.jpg" alt="Equipe Monte Castelo" fill style={{ objectFit: 'cover' }} priority />
+          <Image
+            src="/images/places/frente.jpg"
+            alt="Equipe Monte Castelo"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
         </div>
       </header>
 

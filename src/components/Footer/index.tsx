@@ -4,7 +4,6 @@
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa6';
-import { SlSocialSkype } from 'react-icons/sl';
 import { AiOutlineMail } from 'react-icons/ai';
 import Link from 'next/link';
 import { scrollToSection } from '@/utils/scrollToSection';

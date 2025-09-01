@@ -25,6 +25,12 @@ const CoursesLeftBar = () => {
         <li>
           <Link href="/cursos/transporte-de-valores">Transporte de Valores</Link>
         </li>
+        <li>
+          <Link href="/cursos/armas-nao-letais">Armas não letais</Link>
+        </li>
+        <li>
+          <Link href="/cursos/vssp">VSSP</Link>
+        </li>
       </ul>
 
       <div className={styles.infoContainer}>

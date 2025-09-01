@@ -138,6 +138,14 @@ const Navbar = () => {
                   <Link href="/cursos/transporte-de-valores">
                     <p>Transporte de Valores</p>
                   </Link>
+
+                  <Link href="/cursos/armas-nao-letais">
+                    <p>Armas não letais</p>
+                  </Link>
+
+                  <Link href="/cursos/vssp">
+                    <p>VSSP</p>
+                  </Link>
                 </div>
               </div>
 

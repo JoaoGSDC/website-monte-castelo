@@ -62,6 +62,15 @@
       flex-direction: column;
 
       display: flex;
+
+      ul {
+        li {
+          a {
+            margin-left: 0.5rem;
+            color: var(--main);
+          }
+        }
+      }
     }
 
     .carouselContainer {

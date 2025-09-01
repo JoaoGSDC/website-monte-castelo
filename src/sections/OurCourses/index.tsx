@@ -4,9 +4,9 @@ import styles from './styles.module.scss';
 import button from '../../styles/button.module.scss';
 import { GiPistolGun, GiPoliceOfficerHead } from 'react-icons/gi';
 import { PiCertificateFill, PiSecurityCameraFill } from 'react-icons/pi';
-import { FaTruck } from 'react-icons/fa6';
+import { FaHouseUser, FaTruck } from 'react-icons/fa6';
 import Subtitle from '@/components/Subtitle';
-import { AiFillAlert } from 'react-icons/ai';
+import { AiFillAlert, AiFillThunderbolt } from 'react-icons/ai';
 import { scrollToSection } from '@/utils/scrollToSection';
 import CardFlip from '@/components/CardFlip';
 
@@ -58,6 +58,22 @@ const courses = [
     description: 'Aprenda segurança, reação e práticas com armamentos e carro-forte.',
     backDescription:
       'Capacitação para atuar em carros-fortes com técnicas de prevenção e reação a ataques. Treinamento com pistola .380, escopeta calibre 12 e prática em veículo blindado.',
+  },
+  {
+    icon: <AiFillThunderbolt />,
+    title: 'Armas não letais',
+    subtitle: 'Formação Especializada em Armas Não Letais',
+    description: 'Aprenda segurança, reação e práticas com armamentos não letais.',
+    backDescription:
+      'Capacitação para o uso de armamentos não letais, incluindo técnicas de contenção e controle de distúrbios. Treinamento prático com equipamentos como spray de pimenta, tasers e bastões retráteis.',
+  },
+  {
+    icon: <FaHouseUser />,
+    title: 'VSSP',
+    subtitle: 'Formação Especializada em Vigilância e Segurança Patrimonial',
+    description: 'Domine técnicas avançadas de vigilância e proteção patrimonial para atuar com excelência no setor.',
+    backDescription:
+      'O curso de VSSP oferece formação completa para profissionais que desejam se especializar em vigilância e segurança patrimonial. Aborda estratégias de prevenção, controle de acesso, monitoramento de áreas, procedimentos de emergência e uso de tecnologias modernas para garantir a proteção de pessoas e bens. Ideal para quem busca aprimorar conhecimentos e se destacar no mercado de segurança privada.',
   },
 ];
 

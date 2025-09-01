@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Image from 'next/image';
 import styles from '../styles.module.scss';
@@ -13,14 +14,14 @@ const IMAGES = [
   '/images/cursos-5.jpeg',
 ];
 
-export default function EscoltaArmadaPage() {
+export default function ArmasNaoLetaisPage() {
   return (
     <>
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.headerText}>
-            <h1>Escolta armada</h1>
-            <h3>Preparação para Operações de Escolta Armada</h3>
+            <h1>Armas não letais</h1>
+            <h3>Formação Especializada em Armas Não Letais</h3>
           </div>
 
           <video width="320" height="240" controls={false} autoPlay muted loop>
@@ -33,10 +34,11 @@ export default function EscoltaArmadaPage() {
 
           <div className={styles.content}>
             <Subtitle text="Sobre o curso" />
-            <p>Capacite-se em prevenção, reação e uso de armamentos específicos.</p>
+            <p>Capacite-se para o uso seguro e eficaz de armamentos não letais.</p>
             <p>
-              Formação para atuar na proteção de cargas e valores com ações preventivas e reativas. Treinamento com
-              pistola .380 e escopeta calibre 12, seguindo os padrões da segurança armada profissional.
+              O curso de Armas Não Letais oferece formação completa para profissionais que desejam se especializar no
+              uso de armamentos não letais. Aborda técnicas de contenção, controle de distúrbios e uso responsável de
+              equipamentos como spray de pimenta, tasers e bastões retráteis.
             </p>
 
             <Subtitle text="Documentos necessários" />
@@ -67,7 +69,7 @@ export default function EscoltaArmadaPage() {
               </ul>
             </p>
 
-            <div className={styles.carouselContainer}>
+            {/* <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -91,7 +93,7 @@ export default function EscoltaArmadaPage() {
                   <CarouselNext />
                 </Carousel>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

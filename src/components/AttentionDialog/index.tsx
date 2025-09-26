@@ -39,7 +39,7 @@ export default function AttentionDialog() {
         </DialogHeader>
 
         <Link
-          href="https://forms.gle/c3JLdbkw3S5rPWZ39"
+          href="https://api.whatsapp.com/send?phone=5519974102924"
           target="_blank"
           rel="noopener noreferrer"
           className={styles.button}

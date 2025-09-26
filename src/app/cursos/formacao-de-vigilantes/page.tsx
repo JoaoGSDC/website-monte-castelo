@@ -4,6 +4,7 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
   '/images/cursos/curso-1.jpg',
@@ -38,6 +39,8 @@ export default function FormacaoDeVigilantesPage() {
               estabelecimentos, defesa pessoal e uso de armamentos letais e não letais. Prepare-se para proteger pessoas
               e patrimônios com responsabilidade e técnica.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>

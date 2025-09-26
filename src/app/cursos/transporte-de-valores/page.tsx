@@ -5,6 +5,7 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
   '/images/cursos-1.jpeg',
@@ -39,6 +40,8 @@ export default function TransporteDeValoresPage() {
               Capacitação para atuar em carros-fortes com técnicas de prevenção e reação a ataques. Treinamento com
               pistola .380, escopeta calibre 12 e prática em veículo blindado.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>

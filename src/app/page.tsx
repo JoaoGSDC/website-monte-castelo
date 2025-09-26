@@ -7,6 +7,7 @@ import Depoiments from '@/sections/Depoiments';
 import Contact from '@/sections/Contact';
 import { IPost } from '@/interfaces/post.interface';
 import api from '@/services/api';
+import CoursesListModal from '@/components/CoursesListModal';
 
 const getLatestPosts = async () => {
   try {
@@ -34,7 +35,7 @@ export default async function Home() {
                 hollowText: 'Invista no',
                 title: 'seu futuro',
                 titleMarked: 'profissional',
-                buttonPrimary: 'Saiba mais',
+                buttonPrimary: 'Nossos cursos',
                 buttonSecondary: 'Entrar em contato',
               },
               {
@@ -47,17 +48,19 @@ export default async function Home() {
               },
             ]}
           />
-          <OurCourses />
-
-          <LastBlogPosts posts={lastestPosts} />
-
           <WhoWeAre />
 
           <Depoiments />
 
+          <OurCourses />
+
+          <LastBlogPosts posts={lastestPosts} />
+
           <Contact />
         </main>
       </div>
+
+      <CoursesListModal />
     </>
   );
 }

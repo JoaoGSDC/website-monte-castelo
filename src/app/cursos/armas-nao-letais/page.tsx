@@ -5,6 +5,7 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
   '/images/cursos-1.jpeg',
@@ -34,12 +35,13 @@ export default function ArmasNaoLetaisPage() {
 
           <div className={styles.content}>
             <Subtitle text="Sobre o curso" />
-            <p>Capacite-se para o uso seguro e eficaz de armamentos não letais.</p>
+            <p>Aprenda técnicas de contenção e uso responsável de armamentos não letais.</p>
             <p>
-              O curso de Armas Não Letais oferece formação completa para profissionais que desejam se especializar no
-              uso de armamentos não letais. Aborda técnicas de contenção, controle de distúrbios e uso responsável de
-              equipamentos como spray de pimenta, tasers e bastões retráteis.
+              Capacitação prática para o uso de armamentos não letais, como spray de pimenta, tasers e bastões
+              retráteis. Enfoque em técnicas de contenção, controle de distúrbios e atuação preventiva com segurança.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>

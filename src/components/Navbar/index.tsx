@@ -115,12 +115,32 @@ const Navbar = () => {
                 </a>
 
                 <div className={styles.dropdownContent}>
-                  <Link href="/cursos/formacao-de-vigilantes">
-                    <p>Formação de vigilantes</p>
+                  <Link href="/cursos/armas-nao-letais">
+                    <p>Armas não letais</p>
                   </Link>
 
                   <Link href="/cursos/atualizacao-de-vigilantes">
-                    <p>Atualização de vigilantes</p>
+                    <p>Atualização de Vigilantes</p>
+                  </Link>
+
+                  <Link href="/cursos/atualizacao-escolta-armada">
+                    <p>Atualização Escolta Armada</p>
+                  </Link>
+
+                  <Link href="/cursos/atualizacao-vssp">
+                    <p>Atualização Segurança Pessoal</p>
+                  </Link>
+
+                  <Link href="/cursos/escolta-armada">
+                    <p>Escolta Armada</p>
+                  </Link>
+
+                  <Link href="/cursos/vssp">
+                    <p>Extensão em Segurança Pessoal</p>
+                  </Link>
+
+                  <Link href="/cursos/formacao-de-vigilantes">
+                    <p>Formação de Vigilantes</p>
                   </Link>
 
                   <Link href="/cursos/operador-de-cftv">
@@ -131,20 +151,8 @@ const Navbar = () => {
                     <p>Supervisão, Chefia e Segurança</p>
                   </Link>
 
-                  <Link href="/cursos/escolta-armada">
-                    <p>Escolta Armada</p>
-                  </Link>
-
                   <Link href="/cursos/transporte-de-valores">
                     <p>Transporte de Valores</p>
-                  </Link>
-
-                  <Link href="/cursos/armas-nao-letais">
-                    <p>Armas não letais</p>
-                  </Link>
-
-                  <Link href="/cursos/vssp">
-                    <p>VSSP</p>
                   </Link>
                 </div>
               </div>

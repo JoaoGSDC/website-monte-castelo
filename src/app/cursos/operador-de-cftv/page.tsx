@@ -5,6 +5,7 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
   '/images/cursos-1.jpeg',
@@ -34,11 +35,13 @@ export default function OperadorDeCftvPage() {
 
           <div className={styles.content}>
             <Subtitle text="Sobre o curso" />
-            <p>Aprenda a operar câmeras PTZ e equipamentos BOSCH com simulações práticas.</p>
+            <p>Aprenda a operar câmeras PTZ e sistemas de vigilância eletrônica.</p>
             <p>
               Capacitação para operar sistemas de vigilância eletrônica com câmeras PTZ e equipamentos BOSCH. Inclui
               aulas práticas com rádio comunicação, simulações de pronta resposta e controle por mesa KBD universal.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>

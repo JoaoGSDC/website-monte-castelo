@@ -36,6 +36,7 @@
         letter-spacing: 0.5px;
         text-transform: uppercase;
         font-style: normal;
+        flex: 1;
       }
 
       p {
@@ -45,6 +46,7 @@
         color: var(--text-secondary);
         text-transform: none;
         font-style: normal;
+        flex: 1;
       }
     }
 

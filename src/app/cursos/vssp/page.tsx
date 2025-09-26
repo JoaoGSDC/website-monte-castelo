@@ -5,22 +5,24 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
-  '/images/cursos-1.jpeg',
-  '/images/cursos-2.jpeg',
-  '/images/cursos-3.jpeg',
-  '/images/cursos-4.jpeg',
-  '/images/cursos-5.jpeg',
+  '/images/cursos/curso-9.jpg',
+  '/images/cursos/curso-10.jpg',
+  '/images/cursos/curso-12.jpg',
+  '/images/cursos/curso-13.jpg',
+  '/images/cursos/curso-15.jpg',
+  '/images/cursos/curso-16.jpg',
 ];
 
-export default function ArmasNaoLetaisPage() {
+export default function SegurancaPessoalPage() {
   return (
     <>
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.headerText}>
-            <h1>VSSP</h1>
+            <h1>Extensão em Segurança Pessoal</h1>
             <h3>Formação em Vigilância e Segurança Patrimonial</h3>
           </div>
 
@@ -36,10 +38,12 @@ export default function ArmasNaoLetaisPage() {
             <Subtitle text="Sobre o curso" />
             <p>Domine técnicas avançadas de vigilância e proteção patrimonial para atuar com excelência no setor.</p>
             <p>
-              O curso de Vigilância e Segurança Patrimonial oferece formação completa para profissionais que desejam se
-              especializar na área. Aborda temas como análise de risco, planejamento de segurança, técnicas de
-              vigilância e uso de tecnologias de monitoramento.
+              O curso de extensão em Segurança Pessoal Privada oferece formação aprofundada em estratégias de proteção
+              de indivíduos. Inclui planejamento de segurança, escolta em diferentes situações e uso de armamentos,
+              garantindo alta performance no setor.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>
@@ -69,7 +73,7 @@ export default function ArmasNaoLetaisPage() {
               </ul>
             </p>
 
-            {/* <div className={styles.carouselContainer}>
+            <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -93,7 +97,7 @@ export default function ArmasNaoLetaisPage() {
                   <CarouselNext />
                 </Carousel>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </main>

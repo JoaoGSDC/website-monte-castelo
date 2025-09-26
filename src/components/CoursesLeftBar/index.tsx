@@ -8,28 +8,43 @@ const CoursesLeftBar = () => {
     <aside className={styles.leftBarContainer}>
       <ul className={styles.leftBar}>
         <li>
-          <Link href="/cursos/formacao-de-vigilantes">Formação de Vigilantes</Link>
+          <Link href="/cursos/armas-nao-letais">Armas não letais</Link>
         </li>
+
         <li>
           <Link href="/cursos/atualizacao-de-vigilantes">Atualização de Vigilantes</Link>
         </li>
+
         <li>
-          <Link href="/cursos/operador-de-cftv">Operador de CFTV</Link>
+          <Link href="/cursos/atualizacao-escolta-armada">Atualização Escolta Armada</Link>
         </li>
+
         <li>
-          <Link href="/cursos/supervisao-chefia-e-seguranca">Supervisão, Chefia e Segurança</Link>
+          <Link href="/cursos/atualizacao-vssp">Atualização Segurança Pessoal</Link>
         </li>
+
         <li>
           <Link href="/cursos/escolta-armada">Escolta Armada</Link>
         </li>
+
+        <li>
+          <Link href="/cursos/vssp">Extensão em Segurança Pessoal</Link>
+        </li>
+
+        <li>
+          <Link href="/cursos/formacao-de-vigilantes">Formação de Vigilantes</Link>
+        </li>
+
+        <li>
+          <Link href="/cursos/operador-de-cftv">Operador de CFTV</Link>
+        </li>
+
+        <li>
+          <Link href="/cursos/supervisao-chefia-e-seguranca">Supervisão, Chefia e Segurança</Link>
+        </li>
+
         <li>
           <Link href="/cursos/transporte-de-valores">Transporte de Valores</Link>
-        </li>
-        <li>
-          <Link href="/cursos/armas-nao-letais">Armas não letais</Link>
-        </li>
-        <li>
-          <Link href="/cursos/vssp">VSSP</Link>
         </li>
       </ul>
 
@@ -47,7 +62,7 @@ const CoursesLeftBar = () => {
           rel="noopener noreferrer"
           className={styles.contactLink}
         >
-          Entre em contato
+          Inscreva-se
         </a>
 
         <figure>

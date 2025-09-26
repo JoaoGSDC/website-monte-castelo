@@ -1,17 +1,18 @@
 import React from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import styles from '../styles.module.scss';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+// import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
-const IMAGES = [
+/* const IMAGES = [
   '/images/cursos-1.jpeg',
   '/images/cursos-2.jpeg',
   '/images/cursos-3.jpeg',
   '/images/cursos-4.jpeg',
   '/images/cursos-5.jpeg',
-];
+]; */
 
 export default function EscoltaArmadaPage() {
   return (
@@ -38,6 +39,8 @@ export default function EscoltaArmadaPage() {
               Formação para atuar na proteção de cargas e valores com ações preventivas e reativas. Treinamento com
               pistola .380 e escopeta calibre 12, seguindo os padrões da segurança armada profissional.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>
@@ -67,7 +70,7 @@ export default function EscoltaArmadaPage() {
               </ul>
             </p>
 
-            <div className={styles.carouselContainer}>
+            {/* <div className={styles.carouselContainer}>
               <div className={styles.carousel}>
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -91,7 +94,7 @@ export default function EscoltaArmadaPage() {
                   <CarouselNext />
                 </Carousel>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

@@ -4,6 +4,7 @@ import styles from '../styles.module.scss';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Subtitle from '@/components/Subtitle';
 import CoursesLeftBar from '@/components/CoursesLeftBar';
+import CourseInformation from '@/components/CourseInformation';
 
 const IMAGES = [
   '/images/cursos/curso-4.jpg',
@@ -19,7 +20,7 @@ export default function AtualizacaoDeVigilantesPage() {
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.headerText}>
-            <h1>Atualização de Vigilantes</h1>
+            <h1>Atualização de Vigilantes (Antiga Reciclagem)</h1>
             <h3>Atualização e Recapacitação em Segurança Privada</h3>
           </div>
 
@@ -36,9 +37,11 @@ export default function AtualizacaoDeVigilantesPage() {
             <p>Reforce habilidades em vigilância, defesa pessoal e uso de armamentos.</p>
             <p>
               Atualização obrigatória para vigilantes em atividade. Aulas teóricas e práticas com foco em vigilância
-              patrimonial, defesa pessoal e uso de armamentos. Reforce suas habilidades e mantenha-se apto para atuar
-              com excelência na segurança privada.
+              patrimonial, defesa pessoal e uso de armamentos. Reforce suas habilidades e mantenha-se apto a atuar com
+              excelência na segurança privada.
             </p>
+
+            <CourseInformation />
 
             <Subtitle text="Documentos necessários" />
             <p>

@@ -5,14 +5,14 @@ import styles from './styles.module.scss';
 const BlogHeader: React.FC = () => {
   return (
     <div className={styles.header}>
-      <figure>
-        <Image src="/images/blog-posts-cover.png" alt="Blog Cover" layout="fill" objectFit="cover" />
-      </figure>
-
       <div className={styles.text}>
         <h1>Blog</h1>
         <h2>Academia Monte Castelo</h2>
       </div>
+
+      <figure>
+        <Image src="/images/blog-posts-cover.png" alt="Blog Cover" fill style={{ objectFit: 'cover' }} priority />
+      </figure>
     </div>
   );
 };

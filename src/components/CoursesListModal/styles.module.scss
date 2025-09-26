@@ -72,6 +72,8 @@
   .container {
     width: calc(100% - 2rem) !important;
     padding: 2rem 0 !important;
+    margin-top: -104px;
+    height: calc(100% - 142px);
 
     .leftBar {
       padding: 0 1rem;

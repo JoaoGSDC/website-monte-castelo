@@ -33,7 +33,7 @@ const CoursesListModal = () => {
   if (!isOpen) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} color="var(--text-primary)">
       <div className={styles.container}>
         <figure className={styles.logo}>
           <Image src="/logo-black.png" alt="logo" fill />
@@ -43,43 +43,63 @@ const CoursesListModal = () => {
 
         <ul className={styles.leftBar}>
           <li>
-            <Link href="/cursos/armas-nao-letais">Armas não letais</Link>
+            <Link href="/cursos/armas-nao-letais" onClick={onClose}>
+              Armas não letais
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/atualizacao-de-vigilantes">Atualização de Vigilantes</Link>
+            <Link href="/cursos/atualizacao-de-vigilantes" onClick={onClose}>
+              Atualização de Vigilantes
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/atualizacao-escolta-armada">Atualização Escolta Armada</Link>
+            <Link href="/cursos/atualizacao-escolta-armada" onClick={onClose}>
+              Atualização Escolta Armada
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/atualizacao-vssp">Atualização Segurança Pessoal</Link>
+            <Link href="/cursos/atualizacao-vssp" onClick={onClose}>
+              Atualização Segurança Pessoal
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/escolta-armada">Escolta Armada</Link>
+            <Link href="/cursos/escolta-armada" onClick={onClose}>
+              Escolta Armada
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/vssp">Extensão em Segurança Pessoal</Link>
+            <Link href="/cursos/vssp" onClick={onClose}>
+              Extensão em Segurança Pessoal
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/formacao-de-vigilantes">Formação de Vigilantes</Link>
+            <Link href="/cursos/formacao-de-vigilantes" onClick={onClose}>
+              Formação de Vigilantes
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/operador-de-cftv">Operador de CFTV</Link>
+            <Link href="/cursos/operador-de-cftv" onClick={onClose}>
+              Operador de CFTV
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/supervisao-chefia-e-seguranca">Supervisão, Chefia e Segurança</Link>
+            <Link href="/cursos/supervisao-chefia-e-seguranca" onClick={onClose}>
+              Supervisão, Chefia e Segurança
+            </Link>
           </li>
 
           <li>
-            <Link href="/cursos/transporte-de-valores">Transporte de Valores</Link>
+            <Link href="/cursos/transporte-de-valores" onClick={onClose}>
+              Transporte de Valores
+            </Link>
           </li>
         </ul>
 

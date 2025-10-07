@@ -61,6 +61,12 @@ const CoursesListModal = () => {
           </li>
 
           <li>
+            <Link href="/cursos/atualizacao-transporte-de-valores" onClick={onClose}>
+              Atualização Transporte de Valores
+            </Link>
+          </li>
+
+          <li>
             <Link href="/cursos/atualizacao-vssp" onClick={onClose}>
               Atualização Segurança Pessoal
             </Link>

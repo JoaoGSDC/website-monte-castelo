@@ -20,6 +20,10 @@ const CoursesLeftBar = () => {
         </li>
 
         <li>
+          <Link href="/cursos/atualizacao-transporte-de-valores">Atualização Transporte de Valores</Link>
+        </li>
+
+        <li>
           <Link href="/cursos/atualizacao-vssp">Atualização Segurança Pessoal</Link>
         </li>
 

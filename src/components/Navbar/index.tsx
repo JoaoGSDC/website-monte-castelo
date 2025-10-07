@@ -127,6 +127,10 @@ const Navbar = () => {
                     <p>Atualização Escolta Armada</p>
                   </Link>
 
+                  <Link href="/cursos/atualizacao-transporte-de-valores">
+                    <p>Atualização Transporte de Valores</p>
+                  </Link>
+
                   <Link href="/cursos/atualizacao-vssp">
                     <p>Atualização Segurança Pessoal</p>
                   </Link>

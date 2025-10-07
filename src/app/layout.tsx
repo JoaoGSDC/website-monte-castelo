@@ -4,7 +4,6 @@ import type { Metadata } from 'next';
 import '../styles/globals.css';
 import '../styles/globals.scss';
 import Footer from '@/components/Footer';
-import AttentionDialog from '@/components/AttentionDialog';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -45,7 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body>
-        <AttentionDialog />
         <Navbar />
         {children}
         <Footer />

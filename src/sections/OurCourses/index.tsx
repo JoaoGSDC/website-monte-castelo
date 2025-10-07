@@ -37,6 +37,15 @@ const courses = [
   },
   {
     icon: <PiCertificateFill />,
+    title: 'Atualização Transporte de Valores',
+    subtitle: 'Recapacitação em Operações de Transporte de Valores',
+    description:
+      'Atualize seus conhecimentos em segurança e reações operacionais, com foco em práticas reais de transporte de valores.',
+    backDescription:
+      'Treinamento voltado para profissionais que já atuam na área e buscam reciclagem em técnicas de prevenção, resposta a incidentes e manejo seguro de armamentos. Inclui exercícios com pistola .380, escopeta calibre 12 e simulações em veículo blindado.',
+  },
+  {
+    icon: <PiCertificateFill />,
     title: 'Atualização Segurança Pessoal',
     subtitle: 'Recapacitação em Segurança Pessoal Privada',
     description: 'Aprimore sua atuação em proteção de pessoas e segurança pessoal.',

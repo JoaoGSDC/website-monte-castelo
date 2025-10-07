@@ -49,26 +49,25 @@ export default function SegurancaPessoalPage() {
             <p>
               <ul>
                 <li>Ser brasileiro nato ou naturalizado e com 21 anos completos</li>
-                <li>Cópia da Cédula de Identidade – RG</li>
-                <li>Cópia do CPF (antigo CIC)</li>
-                <li>Cópia do Título de Eleitor</li>
+                <li>Cópia da CNH ou CIN – (Carteira de Identidade Nacional) ATUALIZADA</li>
+                <li>Cópia do Título de Eleitor ou e-Título</li>
                 <li>Cópia do Comprovante de Endereço – emissão de no máximo 03 meses</li>
                 <li>
-                  Cópia do Comprovante de Escolaridade – ter concluído todas as etapas do ensino fundamental (ENSINO
-                  FUNDAMENTAL COMPLETO)
+                  Cópia da Reservista – (observar a necessidade de carimbo pelo Ministério da Defesa – Forças Armadas)
+                  ou Certificado de Dispensa de Incorporação – CDI
                 </li>
-                <li>
-                  Cópia da Reservista (observar a necessidade de carimbo pelo Ministério da Defesa – Forças Armadas) ou
-                  Certificado de Dispensa de Incorporação – CDI
-                </li>
+                <li>Cópia do Certificado do Curso de Formação de Vigilante (Frente e Verso)</li>
+                <li>Cópia do Certificado do Curso de Extensão em Segurança Pessoal (Frente e Verso)</li>
                 <li>Certidão de Quitação Eleitoral</li>
                 <li>Certidão de Crimes Eleitorais</li>
                 <li>Certidão da Justiça Federal</li>
-                <li>Certidão da Justiça Militar da União</li>
+                <li>Certidão da Justiça Militar Federal</li>
                 <li>Certidão da Justiça Militar Estadual</li>
                 <li>Certidão de Execução Criminal</li>
                 <li>Certidões de Distribuição e Ações Criminais</li>
-                <li>Exame Médico – Laudo original (necessário ser feito da Escola Paulista)</li>
+                <li>
+                  Exame Médico – Laudo original (validade de 12 meses com clínicas credenciadas pela Polícia Federal)
+                </li>
                 <li>Exame Psicológico – (validade de 12 meses com Psicólogo Credenciado pela Polícia Federal)</li>
               </ul>
             </p>

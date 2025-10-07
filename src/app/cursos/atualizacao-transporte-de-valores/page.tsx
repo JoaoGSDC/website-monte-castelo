@@ -15,14 +15,14 @@ const IMAGES = [
   '/images/cursos-5.jpeg',
 ];
 
-export default function TransporteDeValoresPage() {
+export default function AtualizacaoTransporteDeValoresPage() {
   return (
     <>
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.headerText}>
-            <h1>Transporte de valores</h1>
-            <h3>Formação Especializada em Transporte de Valores</h3>
+            <h1>Atualização em Transporte de Valores (Antiga Reciclagem)</h1>
+            <h3>Aperfeiçoamento de Habilidades para Transporte de Valores</h3>
           </div>
 
           <video width="320" height="240" controls={false} autoPlay muted loop>
@@ -35,10 +35,14 @@ export default function TransporteDeValoresPage() {
 
           <div className={styles.content}>
             <Subtitle text="Sobre o curso" />
-            <p>Aprenda segurança, reação e práticas com armamentos e carro-forte.</p>
             <p>
-              Capacitação para atuar em carros-fortes com técnicas de prevenção e reação a ataques. Treinamento com
-              pistola .380, escopeta calibre 12 e prática em veículo blindado.
+              Atualize seus conhecimentos em segurança e reações operacionais, com foco em práticas reais de transporte
+              de valores.
+            </p>
+            <p>
+              Treinamento voltado para profissionais que já atuam na área e buscam reciclagem em técnicas de prevenção,
+              resposta a incidentes e manejo seguro de armamentos. Inclui exercícios com pistola .380, escopeta calibre
+              12 e simulações em veículo blindado.
             </p>
 
             <CourseInformation />
@@ -51,14 +55,11 @@ export default function TransporteDeValoresPage() {
                 <li>Cópia do Título de Eleitor ou e-Título</li>
                 <li>Cópia do Comprovante de Endereço – emissão de no máximo 03 meses</li>
                 <li>
-                  Cópia do Histórico Escolar – ter concluído todas as etapas do ensino fundamental (ENSINO FUNDAMENTAL
-                  COMPLETO)
-                </li>
-                <li>
                   Cópia da Reservista – (observar a necessidade de carimbo pelo Ministério da Defesa – Forças Armadas)
                   ou Certificado de Dispensa de Incorporação – CDI
                 </li>
                 <li>Cópia do Certificado do Curso de Formação de Vigilante (Frente e Verso)</li>
+                <li>Cópia do Certificado do Curso de Extensão em Transporte de Valores (Frente e Verso)</li>
                 <li>Certidão de Quitação Eleitoral</li>
                 <li>Certidão de Crimes Eleitorais</li>
                 <li>Certidão da Justiça Federal</li>

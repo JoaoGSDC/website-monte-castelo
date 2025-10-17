@@ -217,6 +217,7 @@
 @media only screen and (max-width: 600px) {
   .container {
     padding: 32px;
+    overflow-x: hidden;
 
     .content {
       width: 100%;
@@ -241,7 +242,24 @@
 
       .courses {
         position: initial;
-        width: auto;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap; /* impede quebra de linha */
+        overflow-x: auto; /* ativa scroll horizontal */
+        gap: 16px;
+        scroll-snap-type: x mandatory; /* rolagem suave por item (opcional) */
+        -webkit-overflow-scrolling: touch; /* rolagem suave no iOS */
+
+        /* oculta a barra de rolagem (opcional) */
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .course {
+          flex: 0 0 80%; /* ocupa 80% da tela por card */
+          min-width: 280px;
+          scroll-snap-align: start; /* fixa o card no início ao parar o scroll */
+        }
       }
     }
 

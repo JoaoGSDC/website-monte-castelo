@@ -244,21 +244,20 @@
         position: initial;
         width: 100%;
         display: flex;
-        flex-wrap: nowrap; /* impede quebra de linha */
-        overflow-x: auto; /* ativa scroll horizontal */
+        flex-wrap: nowrap;
+        overflow-x: auto;
         gap: 16px;
-        scroll-snap-type: x mandatory; /* rolagem suave por item (opcional) */
-        -webkit-overflow-scrolling: touch; /* rolagem suave no iOS */
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
 
-        /* oculta a barra de rolagem (opcional) */
         &::-webkit-scrollbar {
           display: none;
         }
 
         .course {
-          flex: 0 0 80%; /* ocupa 80% da tela por card */
+          flex: 0 0 80%;
           min-width: 280px;
-          scroll-snap-align: start; /* fixa o card no início ao parar o scroll */
+          scroll-snap-align: start;
         }
       }
     }

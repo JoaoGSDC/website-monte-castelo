@@ -8,8 +8,9 @@
   .container {
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
-    padding: 100px 0;
+    max-width: 95%;
+    width: 100%;
+    padding: 100px 40px;
     row-gap: 2rem;
   }
 }
@@ -138,6 +139,190 @@
   }
 }
 
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.tabButton {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tabButtonActive {
+  color: var(--main);
+  border-color: var(--main);
+}
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+/* Biblioteca */
+.library {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.libraryList {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  height: fit-content;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f3f4f6;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      button {
+        width: 100%;
+        text-align: left;
+        padding: 14px 16px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+
+        &:hover {
+          background: #f9fafb;
+          border-color: #e5e7eb;
+          transform: translateX(4px);
+        }
+
+        &.tabButtonActive {
+          background: rgba(245, 124, 48, 0.1);
+          border-color: var(--main);
+          color: var(--main);
+          font-weight: 600;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: var(--main);
+            border-radius: 0 2px 2px 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pdfViewer {
+  width: 100%;
+  min-height: 700px;
+  height: calc(100vh - 250px);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .pdfObject {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    flex: 1;
+    min-height: 700px;
+  }
+
+  .pdfIframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    flex: 1;
+    min-height: 700px;
+  }
+}
+
+.pdfPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  background: #f9fafb;
+}
+
+/* Sustentabilidade */
+.sustainability {
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--main);
+    margin-bottom: 12px;
+  }
+}
+
+.sustainabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.sustainabilityCard {
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 16px;
+
+  h4 {
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+
+  p {
+    color: var(--text-secondary);
+  }
+}
+
 @media (max-width: 900px) {
   .aboutSection {
     flex-direction: column;
@@ -152,6 +337,25 @@
   }
   .header .headerContent {
     padding: 32px 16px;
+  }
+
+  .library {
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    .libraryList {
+      padding: 20px;
+    }
+
+    .pdfViewer {
+      min-height: 600px;
+      height: 65vh;
+      
+      .pdfObject,
+      .pdfIframe {
+        min-height: 600px;
+      }
+    }
   }
 }
 
@@ -193,5 +397,41 @@
         }
       }
     }
+  }
+
+  .library {
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    .libraryList {
+      order: 2;
+      padding: 20px;
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+      }
+
+      ul li button {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+      }
+    }
+
+    .pdfViewer {
+      order: 1;
+      min-height: 500px;
+      height: 60vh;
+
+      .pdfObject,
+      .pdfIframe {
+        min-height: 500px;
+      }
+    }
+  }
+
+  .sustainabilityGrid {
+    grid-template-columns: 1fr;
   }
 }

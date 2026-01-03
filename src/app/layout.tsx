@@ -1,9 +1,8 @@
 import { Barlow } from 'next/font/google';
-import Navbar from '@/components/Navbar';
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import '../styles/globals.scss';
-import Footer from '@/components/Footer';
+import ConditionalLayout from '@/components/ConditionalLayout';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -43,10 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
 
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
+      <body style={{ margin: 0, padding: 0 }}>
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );

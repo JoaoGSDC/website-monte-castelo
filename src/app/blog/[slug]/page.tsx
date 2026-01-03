@@ -13,7 +13,11 @@ async function fetchPost(slug: string) {
     const res = await api.get<IPost>(`/posts/${slug}`);
     return res.data;
   } catch (error: any) {
-    console.error(error);
+    console.error('Error fetching post:', error?.message || error);
+    if (error?.code === 'ECONNRESET' || error?.code === 'ETIMEDOUT') {
+      console.error('Connection error - the server may be temporarily unavailable');
+    }
+    return null;
   }
 }
 
@@ -30,7 +34,8 @@ const getLatestPosts = async () => {
 };
 
 export default async function BlogPost({ params }: any) {
-  const post = await fetchPost(params.slug);
+  const { slug } = await params;
+  const post = await fetchPost(slug);
   const latestPosts = await getLatestPosts();
 
   if (!post) {

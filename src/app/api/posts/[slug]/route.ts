@@ -7,7 +7,7 @@ export async function GET(_: NextRequest, context: any) {
   try {
     const db: Db = await connectToDatabase();
 
-    const { slug } = context.params;
+    const { slug } = await context.params;
 
     const post = await db.collection('posts').findOne({ slug });
 

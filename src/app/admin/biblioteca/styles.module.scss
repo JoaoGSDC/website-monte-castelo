@@ -1,0 +1,164 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 18px;
+    color: var(--text-secondary);
+  }
+
+  .uploadButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--main);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &:hover:not(:has(input:disabled)) {
+      background: #e66a20;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(245, 124, 48, 0.3);
+    }
+
+    input:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.filesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.fileCard {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .fileInfo {
+    flex: 1;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .downloadButton,
+  .deleteButton {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .downloadButton {
+    background: var(--main);
+    color: var(--white);
+
+    &:hover {
+      background: #e66a20;
+    }
+  }
+
+  .deleteButton {
+    background: transparent;
+    border: 2px solid #c33;
+    color: #c33;
+
+    &:hover {
+      background: #fee;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-tertiary);
+  font-size: 16px;
+  background: var(--white);
+  border-radius: 12px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 18px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .filesList {
+    grid-template-columns: 1fr;
+  }
+}
+

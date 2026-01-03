@@ -1,0 +1,118 @@
+.imageInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .modeSelector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+
+    button {
+      padding: 8px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Barlow', sans-serif;
+
+      &:hover {
+        border-color: var(--main);
+        color: var(--text-primary);
+      }
+
+      &.active {
+        background: var(--main);
+        color: var(--white);
+        border-color: var(--main);
+      }
+    }
+  }
+
+  input[type="url"] {
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-primary);
+    background: var(--white);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--main);
+    }
+
+    &::placeholder {
+      color: var(--text-tertiary);
+    }
+  }
+
+  .uploadContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .fileInput {
+      display: none;
+    }
+
+    .uploadButton {
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Barlow', sans-serif;
+      text-align: center;
+
+      &:hover:not(:disabled) {
+        border-color: var(--main);
+        background: var(--main);
+        color: var(--white);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+  }
+
+  .preview {
+    margin-top: 8px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 500px;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}

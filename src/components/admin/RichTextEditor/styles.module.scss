@@ -1,0 +1,157 @@
+.editorWrapper {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--white);
+
+  &:focus-within {
+    border-color: var(--main);
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+
+  button {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    font-family: 'Barlow', sans-serif;
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #e9ecef;
+    }
+
+    &.active {
+      background: var(--main);
+      color: var(--white);
+    }
+  }
+
+  .divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+}
+
+.editorContainer {
+  min-height: 300px;
+  padding: 16px;
+
+  :global {
+    .ProseMirror {
+      outline: none;
+      min-height: 268px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+
+      &[data-placeholder]:empty::before {
+        content: attr(data-placeholder);
+        float: left;
+        color: var(--text-tertiary);
+        pointer-events: none;
+        height: 0;
+      }
+
+      p {
+        margin: 0 0 16px 0;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        margin: 24px 0 16px 0;
+        font-weight: 700;
+        line-height: 1.4;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      ul, ol {
+        margin: 0 0 16px 0;
+        padding-left: 24px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      blockquote {
+        border-left: 4px solid var(--main);
+        padding-left: 16px;
+        margin: 16px 0;
+        font-style: italic;
+        color: var(--text-secondary);
+      }
+
+      a.editor-link {
+        color: var(--main);
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+          color: #e66a20;
+        }
+      }
+
+      img.editor-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 16px 0;
+        display: block;
+      }
+
+      strong {
+        font-weight: 700;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      u {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.editorContent {
+  min-height: 268px;
+}

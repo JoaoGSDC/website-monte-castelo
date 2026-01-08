@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import styles from './styles.module.scss';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useApiCache } from '@/hooks/useApiCache';
 
@@ -17,7 +17,7 @@ export default function QuemSomosPage() {
   const [selectedPdf, setSelectedPdf] = useState<string>('');
 
   const { data: libraryFiles, loading: loadingLibrary } = useApiCache<LibraryFile[]>('/api/biblioteca');
-  const { data: imagesData, loading: loadingImages } = useApiCache<{
+  const { data: imagesData } = useApiCache<{
     quemSomos?: {
       cover?: string;
       video?: string;
@@ -25,12 +25,15 @@ export default function QuemSomosPage() {
     };
   }>('/api/imagens');
 
-  const libraryFilesList = Array.isArray(libraryFiles) && libraryFiles.length > 0 ? libraryFiles : [];
-  const images = {
+  const libraryFilesList = useMemo(() => {
+    return Array.isArray(libraryFiles) && libraryFiles.length > 0 ? libraryFiles : [];
+  }, [libraryFiles]);
+
+  const images = useMemo(() => ({
     cover: imagesData?.quemSomos?.cover || '/images/places/frente.jpg',
     video: imagesData?.quemSomos?.video || '/videos/video-1.mp4',
     carousel: Array.isArray(imagesData?.quemSomos?.carousel) ? imagesData.quemSomos.carousel : [],
-  };
+  }), [imagesData]);
 
   // Set first PDF as selected when library loads
   useEffect(() => {

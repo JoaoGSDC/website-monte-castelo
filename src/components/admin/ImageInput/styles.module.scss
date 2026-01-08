@@ -162,8 +162,12 @@
     border-radius: 8px;
     overflow: hidden;
     max-width: 500px;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
 
-    img {
+    img,
+    :global(img) {
       width: 100%;
       height: auto;
       display: block;

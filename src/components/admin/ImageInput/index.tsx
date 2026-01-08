@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 
 interface ImageInputProps {
@@ -62,8 +63,9 @@ export default function ImageInput({
 
       const data = await response.json();
       onChange(data.url);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao fazer upload da imagem');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao fazer upload da imagem';
+      setError(errorMessage);
     } finally {
       setUploading(false);
       if (fileInputRef.current) {
@@ -156,7 +158,13 @@ export default function ImageInput({
 
       {value && (
         <div className={styles.preview}>
-          <img src={value} alt="Preview" onError={() => setError('Erro ao carregar imagem')} />
+          <Image
+            src={value}
+            alt="Preview"
+            fill
+            style={{ objectFit: 'contain' }}
+            unoptimized
+          />
         </div>
       )}
     </div>

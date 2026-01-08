@@ -32,7 +32,7 @@ export async function GET() {
 
     // Retornar apenas os campos necessários para o frontend
     return NextResponse.json(
-      files.map((file) => ({
+      files.map((file: any) => ({
         _id: file._id.toString(),
         name: file.name,
         url: file.url,

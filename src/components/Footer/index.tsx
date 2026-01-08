@@ -7,8 +7,11 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa6';
 import { AiOutlineMail } from 'react-icons/ai';
 import Link from 'next/link';
 import { scrollToSection } from '@/utils/scrollToSection';
+import { useConfiguracoes } from '@/hooks/useConfiguracoes';
 
 const Footer: React.FC = () => {
+  const { configuracoes, getWhatsAppUrl, formatPhone } = useConfiguracoes();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -26,27 +29,31 @@ const Footer: React.FC = () => {
 
         <div className={styles.column}>
           <h3>Endereço</h3>
-          <p>R. Laurente Cia, 94, Jd. Porto Real IV, Limeira-SP</p>
+          <p>{configuracoes.contato.endereco || 'R. Laurente Cia, 94, Jd. Porto Real IV, Limeira-SP'}</p>
           <figure>
-            <Image src="/images/map.png" alt="map" fill />
+            <Image src="/images/map.png" alt="Localização da Academia Monte Castelo em Limeira-SP" fill loading="lazy" sizes="(max-width: 768px) 100vw, 50vw" />
           </figure>
         </div>
 
         <div className={styles.column}>
           <h3>Contatos</h3>
-          <a href="https://api.whatsapp.com/send?phone=5519974102924">
-            <p className={styles.option}>
-              <FaWhatsapp />
-              (19) 9 7410-2924
-            </p>
-          </a>
+          {configuracoes.social.whatsapp && (
+            <a href={getWhatsAppUrl()}>
+              <p className={styles.option}>
+                <FaWhatsapp />
+                {formatPhone(configuracoes.social.whatsapp)}
+              </p>
+            </a>
+          )}
 
-          <a href="mailto:contato@academiamontecastelo.com.br">
-            <p className={styles.option}>
-              <AiOutlineMail />
-              contato@academiamontecastelo.com.br
-            </p>
-          </a>
+          {configuracoes.contato.email && (
+            <a href={`mailto:${configuracoes.contato.email}`}>
+              <p className={styles.option}>
+                <AiOutlineMail />
+                {configuracoes.contato.email}
+              </p>
+            </a>
+          )}
 
           <div className={styles.column} style={{ marginTop: 32 }}>
             <h3>Horário de funcionamento</h3>
@@ -88,17 +95,21 @@ const Footer: React.FC = () => {
         <p>&copy; {new Date().getFullYear()} Academia Monte Castelo. All rights reserved.</p>
 
         <figure>
-          <Image src="/logo.png" alt="logo" fill />
+          <Image src="/logo.png" alt="Academia Monte Castelo - Logo" fill loading="lazy" sizes="(max-width: 768px) 120px, 180px" />
         </figure>
 
         <div className={styles.socialMedia}>
-          <a href="https://www.instagram.com/academiamontecastelooficial/" target="_blank">
-            <FaInstagram />
-          </a>
+          {configuracoes.social.instagram && (
+            <a href={configuracoes.social.instagram} target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
+          )}
 
-          <a href="https://www.facebook.com/academiamontecastelo" target="_blank">
-            <FaFacebook />
-          </a>
+          {configuracoes.social.facebook && (
+            <a href={configuracoes.social.facebook} target="_blank" rel="noopener noreferrer">
+              <FaFacebook />
+            </a>
+          )}
         </div>
       </div>
     </footer>

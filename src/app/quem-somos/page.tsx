@@ -4,60 +4,40 @@ import Image from 'next/image';
 import styles from './styles.module.scss';
 import { useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useApiCache } from '@/hooks/useApiCache';
 
-const IMAGES = [
-  // FRENTE
-  '/images/places/frente.jpg',
-
-  // ENTRADA
-  '/images/places/entrada-1.jpg',
-  '/images/places/entrada-2.jpg',
-  '/images/places/entrada-3.jpg',
-
-  // STAND DE TIRO
-  '/images/places/stand-de-tiro-7.jpg',
-  '/images/places/stand-de-tiro-8.jpg',
-  '/images/places/stand-de-tiro-1.jpg',
-  '/images/places/stand-de-tiro-2.jpg',
-  '/images/places/stand-de-tiro-3.jpg',
-  '/images/places/stand-de-tiro-4.jpg',
-  '/images/places/stand-de-tiro-5.jpg',
-  '/images/places/stand-de-tiro-6.jpg',
-
-  // RECEPÇÃO
-  '/images/places/recepcao-1.jpg',
-  '/images/places/recepcao-2.jpg',
-
-  // SALA DE AULA
-  '/images/places/sala-de-aula-1.jpg',
-  '/images/places/sala-de-aula-2.jpg',
-  '/images/places/sala-de-aula-3.jpg',
-
-  // TIRO VIRTUAL
-  '/images/places/tiro-virtual-1.jpg',
-  '/images/places/tiro-virtual-2.jpg',
-  '/images/places/tiro-virtual-3.jpg',
-
-  // ACADEMIA
-  '/images/places/academia-1.jpg',
-  '/images/places/academia-2.jpg',
-  '/images/places/academia-3.jpg',
-  '/images/places/academia-4.jpg',
-  '/images/places/academia-5.jpg',
-  '/images/places/academia-6.jpg',
-
-  // REFEITORIO
-  '/images/places/refeitorio-1.jpg',
-  '/images/places/refeitorio-2.jpg',
-];
-
-const LIBRARY_ITEMS = [
-  { title: 'Documento', file: '/documento.pdf' },
-];
+interface LibraryFile {
+  _id: string;
+  name: string;
+  url: string;
+}
 
 export default function QuemSomosPage() {
   const [activeTab, setActiveTab] = useState<'institucional' | 'biblioteca' | 'sustentabilidade'>('institucional');
-  const [selectedPdf, setSelectedPdf] = useState<string>(LIBRARY_ITEMS[0]?.file || '');
+  const [selectedPdf, setSelectedPdf] = useState<string>('');
+
+  const { data: libraryFiles, loading: loadingLibrary } = useApiCache<LibraryFile[]>('/api/biblioteca');
+  const { data: imagesData, loading: loadingImages } = useApiCache<{
+    quemSomos?: {
+      cover?: string;
+      video?: string;
+      carousel?: string[];
+    };
+  }>('/api/imagens');
+
+  const libraryFilesList = Array.isArray(libraryFiles) && libraryFiles.length > 0 ? libraryFiles : [];
+  const images = {
+    cover: imagesData?.quemSomos?.cover || '/images/places/frente.jpg',
+    video: imagesData?.quemSomos?.video || '/videos/video-1.mp4',
+    carousel: Array.isArray(imagesData?.quemSomos?.carousel) ? imagesData.quemSomos.carousel : [],
+  };
+
+  // Set first PDF as selected when library loads
+  useEffect(() => {
+    if (libraryFilesList.length > 0 && !selectedPdf) {
+      setSelectedPdf(libraryFilesList[0].url);
+    }
+  }, [libraryFilesList, selectedPdf]);
 
   return (
     <main className={styles.main}>
@@ -68,7 +48,7 @@ export default function QuemSomosPage() {
         </div>
         <div className={styles.headerImage}>
           <Image
-            src="/images/places/frente.jpg"
+            src={images.cover}
             alt="Equipe Monte Castelo"
             fill
             style={{ objectFit: 'cover' }}
@@ -140,7 +120,7 @@ export default function QuemSomosPage() {
 
               <figure className={styles.aboutImage}>
                 <video width={400} height={300} controls={false} autoPlay muted loop>
-                  <source src="/videos/video-1.mp4" type="video/mp4" />
+                  <source src={images.video} type="video/mp4" />
                   Seu navegador não suporta o elemento de vídeo.
                 </video>
               </figure>
@@ -157,31 +137,33 @@ export default function QuemSomosPage() {
               </ul>
             </section>
 
-            <div className={styles.carouselContainer}>
-              <div className={styles.carousel}>
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    {IMAGES.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <div className="relative w-full aspect-video">
-                          <figure className="w-full h-full">
-                            <Image
-                              src={image}
-                              alt={`Imagem ${index + 1}`}
-                              fill
-                              className="object-cover rounded-lg"
-                              sizes="100vw"
-                            />
-                          </figure>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+            {images.carousel.length > 0 && (
+              <div className={styles.carouselContainer}>
+                <div className={styles.carousel}>
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {images.carousel.map((image, index) => (
+                        <CarouselItem key={index}>
+                          <div className="relative w-full aspect-video">
+                            <figure className="w-full h-full">
+                              <Image
+                                src={image}
+                                alt={`Imagem ${index + 1}`}
+                                fill
+                                className="object-cover rounded-lg"
+                                sizes="100vw"
+                              />
+                            </figure>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
@@ -190,19 +172,25 @@ export default function QuemSomosPage() {
             <section className={styles.library}>
               <div className={styles.libraryList}>
                 <h3>Cartilhas e Materiais</h3>
-                <ul>
-                  {LIBRARY_ITEMS.map((item) => (
-                    <li key={item.file}>
-                      <button
-                        className={`${styles.tabButton} ${selectedPdf === item.file ? styles.tabButtonActive : ''}`}
-                        onClick={() => setSelectedPdf(item.file)}
-                        aria-pressed={selectedPdf === item.file}
-                      >
-                        {item.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                {loadingLibrary ? (
+                  <div style={{ padding: '20px', textAlign: 'center' }}>Carregando...</div>
+                ) : libraryFilesList.length === 0 ? (
+                  <div style={{ padding: '20px', textAlign: 'center' }}>Nenhum material disponível</div>
+                ) : (
+                  <ul>
+                    {libraryFilesList.map((file) => (
+                      <li key={file._id}>
+                        <button
+                          className={`${styles.tabButton} ${selectedPdf === file.url ? styles.tabButtonActive : ''}`}
+                          onClick={() => setSelectedPdf(file.url)}
+                          aria-pressed={selectedPdf === file.url}
+                        >
+                          {file.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <div className={styles.pdfViewer}>
                 {selectedPdf ? (

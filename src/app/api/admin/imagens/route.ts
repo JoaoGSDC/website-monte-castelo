@@ -12,13 +12,27 @@ export async function GET() {
     if (!config) {
       // Valores padrão
       return NextResponse.json({
-        logo: '/logo.png',
-        logoBlack: '/logo-black.png',
-        blogCover: '/images/blog-cover.jpg',
-        blogPostsCover: '/images/blog-posts-cover.png',
-        quemSomosHeader: '',
-        cursosHeader: '',
-        contactHeader: '',
+        home: {
+          whoWeAreImage: '/images/cursos-5.jpeg',
+          depoimentsMainImage: '/images/aula.jpg',
+          depoimentsTitleImage: '/images/background-5.jpg',
+          ourCoursesImage: '/images/background-6.jpg',
+        },
+        quemSomos: {
+          cover: '/images/places/frente.jpg',
+          video: '/videos/video-1.mp4',
+          carousel: [],
+        },
+        cursos: {
+          sidebarImage: '/images/blog-cover.png',
+        },
+        blog: {
+          cover: '/images/blog-cover.jpg',
+        },
+        logos: {
+          logo: '/logo.png',
+          logoBlack: '/logo-black.png',
+        },
       });
     }
 

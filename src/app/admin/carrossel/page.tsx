@@ -1,22 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import styles from './styles.module.scss';
-import { FiPlus, FiTrash2, FiSave } from 'react-icons/fi';
+import { FiPlus, FiEdit, FiTrash2, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 
 interface CarouselItem {
   image: string;
-  hollowText: string;
-  title: string;
-  titleMarked: string;
-  buttonPrimary: string;
-  buttonSecondary: string;
+  hollowText?: string;
+  title?: string;
+  titleMarked?: string;
+  buttonPrimary?: string;
+  buttonPrimaryLink?: string;
+  buttonSecondary?: string;
+  buttonSecondaryLink?: string;
 }
 
 export default function CarrosselPage() {
   const [items, setItems] = useState<CarouselItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [reordering, setReordering] = useState(false);
 
   useEffect(() => {
     fetchCarousel();
@@ -27,18 +30,112 @@ export default function CarrosselPage() {
       const response = await fetch('/api/admin/carrossel');
       if (response.ok) {
         const data = await response.json();
-        setItems(data);
+        setItems(Array.isArray(data) ? data : []);
       }
     } catch (error) {
       console.error('Erro ao buscar carrossel:', error);
+      setItems([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
+  const handleDelete = async (index: number) => {
+    if (!confirm('Tem certeza que deseja remover este item?')) return;
+
+    try {
+      const newItems = items.filter((_, i) => i !== index);
+      const response = await fetch('/api/admin/carrossel', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItems),
+      });
+
+      if (response.ok) {
+        setItems(newItems);
+        alert('Item removido com sucesso!');
+      } else {
+        alert('Erro ao remover item');
+      }
+    } catch (error) {
+      console.error('Erro ao remover item:', error);
+      alert('Erro ao remover item');
+    }
+  };
+
+  const handleMoveUp = async (index: number) => {
+    if (index === 0) return;
+
+    const newItems = [...items];
+    [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
+
+    setReordering(true);
+    try {
+      const response = await fetch('/api/admin/carrossel', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItems),
+      });
+
+      if (response.ok) {
+        setItems(newItems);
+      } else {
+        alert('Erro ao reordenar item');
+      }
+    } catch (error) {
+      console.error('Erro ao reordenar item:', error);
+      alert('Erro ao reordenar item');
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  const handleMoveDown = async (index: number) => {
+    if (index === items.length - 1) return;
+
+    const newItems = [...items];
+    [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
+
+    setReordering(true);
+    try {
+      const response = await fetch('/api/admin/carrossel', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItems),
+      });
+
+      if (response.ok) {
+        setItems(newItems);
+      } else {
+        alert('Erro ao reordenar item');
+      }
+    } catch (error) {
+      console.error('Erro ao reordenar item:', error);
+      alert('Erro ao reordenar item');
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  const handleAdd = async () => {
+    const newItem: CarouselItem = {
+      image: '',
+      hollowText: '',
+      title: '',
+      titleMarked: '',
+      buttonPrimary: '',
+      buttonPrimaryLink: '',
+      buttonSecondary: '',
+      buttonSecondaryLink: '',
+    };
+
+    const newItems = [...items, newItem];
 
     try {
       const response = await fetch('/api/admin/carrossel', {
@@ -46,46 +143,20 @@ export default function CarrosselPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(items),
+        body: JSON.stringify(newItems),
       });
 
       if (response.ok) {
-        alert('Carrossel salvo com sucesso!');
+        setItems(newItems);
+        // Redirecionar para a página de edição do novo item
+        window.location.href = `/admin/carrossel/${newItems.length - 1}`;
       } else {
-        alert('Erro ao salvar carrossel');
+        alert('Erro ao adicionar item');
       }
     } catch (error) {
-      console.error('Erro ao salvar carrossel:', error);
-      alert('Erro ao salvar carrossel');
-    } finally {
-      setSaving(false);
+      console.error('Erro ao adicionar item:', error);
+      alert('Erro ao adicionar item');
     }
-  };
-
-  const handleAdd = () => {
-    setItems([
-      ...items,
-      {
-        image: '',
-        hollowText: '',
-        title: '',
-        titleMarked: '',
-        buttonPrimary: '',
-        buttonSecondary: '',
-      },
-    ]);
-  };
-
-  const handleRemove = (index: number) => {
-    if (confirm('Tem certeza que deseja remover este item?')) {
-      setItems(items.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleChange = (index: number, field: keyof CarouselItem, value: string) => {
-    const newItems = [...items];
-    newItems[index] = { ...newItems[index], [field]: value };
-    setItems(newItems);
   };
 
   if (loading) {
@@ -105,109 +176,84 @@ export default function CarrosselPage() {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className={styles.itemsList}>
-          {items.length === 0 ? (
-            <div className={styles.empty}>Nenhum item no carrossel</div>
-          ) : (
-            items.map((item, index) => (
-              <div key={index} className={styles.itemCard}>
-                <div className={styles.itemHeader}>
-                  <h3>Item {index + 1}</h3>
-                  <button
-                    type="button"
-                    onClick={() => handleRemove(index)}
-                    className={styles.removeButton}
-                  >
-                    <FiTrash2 />
-                  </button>
-                </div>
-
-                <div className={styles.formGrid}>
-                  <div className={styles.formGroup}>
-                    <label>Imagem (URL) *</label>
-                    <input
-                      type="url"
-                      value={item.image}
-                      onChange={(e) => handleChange(index, 'image', e.target.value)}
-                      required
-                      placeholder="/images/background-1.png"
-                    />
-                    {item.image && (
-                      <div className={styles.preview}>
-                        <img src={item.image} alt={`Preview ${index + 1}`} />
-                      </div>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Ordem</th>
+              <th>Imagem</th>
+              <th>Texto Oco</th>
+              <th>Título</th>
+              <th>Título Marcado</th>
+              <th>Botão Primário</th>
+              <th>Botão Secundário</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.length === 0 ? (
+              <tr>
+                <td colSpan={8} className={styles.empty}>
+                  Nenhum item no carrossel
+                </td>
+              </tr>
+            ) : (
+              items.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <div className={styles.orderControls}>
+                      <button
+                        type="button"
+                        onClick={() => handleMoveUp(index)}
+                        disabled={index === 0 || reordering}
+                        className={styles.orderButton}
+                        title="Mover para cima"
+                      >
+                        <FiChevronUp />
+                      </button>
+                      <span className={styles.orderNumber}>{index + 1}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleMoveDown(index)}
+                        disabled={index === items.length - 1 || reordering}
+                        className={styles.orderButton}
+                        title="Mover para baixo"
+                      >
+                        <FiChevronDown />
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    {item.image ? (
+                      <img src={item.image} alt={`Item ${index + 1}`} className={styles.image} />
+                    ) : (
+                      <span className={styles.noImage}>Sem imagem</span>
                     )}
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Texto Oco *</label>
-                    <input
-                      type="text"
-                      value={item.hollowText}
-                      onChange={(e) => handleChange(index, 'hollowText', e.target.value)}
-                      required
-                      placeholder="Invista no"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Título *</label>
-                    <input
-                      type="text"
-                      value={item.title}
-                      onChange={(e) => handleChange(index, 'title', e.target.value)}
-                      required
-                      placeholder="seu futuro"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Título Marcado *</label>
-                    <input
-                      type="text"
-                      value={item.titleMarked}
-                      onChange={(e) => handleChange(index, 'titleMarked', e.target.value)}
-                      required
-                      placeholder="profissional"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Botão Primário *</label>
-                    <input
-                      type="text"
-                      value={item.buttonPrimary}
-                      onChange={(e) => handleChange(index, 'buttonPrimary', e.target.value)}
-                      required
-                      placeholder="Nossos cursos"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Botão Secundário *</label>
-                    <input
-                      type="text"
-                      value={item.buttonSecondary}
-                      onChange={(e) => handleChange(index, 'buttonSecondary', e.target.value)}
-                      required
-                      placeholder="Entrar em contato"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        <div className={styles.actions}>
-          <button type="submit" className={styles.submitButton} disabled={saving || items.length === 0}>
-            <FiSave />
-            {saving ? 'Salvando...' : 'Salvar Carrossel'}
-          </button>
-        </div>
-      </form>
+                  </td>
+                  <td>{item.hollowText || '-'}</td>
+                  <td>{item.title || '-'}</td>
+                  <td>{item.titleMarked || '-'}</td>
+                  <td>{item.buttonPrimary || '-'}</td>
+                  <td>{item.buttonSecondary || '-'}</td>
+                  <td>
+                    <div className={styles.actions}>
+                      <Link href={`/admin/carrossel/${index}`} className={styles.actionButton}>
+                        <FiEdit />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className={`${styles.actionButton} ${styles.deleteButton}`}
+                      >
+                        <FiTrash2 />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
-

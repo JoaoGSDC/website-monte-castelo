@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import button from '../../styles/button.module.scss';
 import Subtitle from '@/components/Subtitle';
@@ -8,28 +7,16 @@ import { scrollToSection } from '@/utils/scrollToSection';
 import CardFlip from '@/components/CardFlip';
 import { ICourse } from '@/interfaces/course.interface';
 import { getCourseIcon } from '@/utils/courseIcons';
+import { useApiCache } from '@/hooks/useApiCache';
 
 export default function OurCourses() {
-  const [courses, setCourses] = useState<ICourse[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: courses, loading } = useApiCache<ICourse[]>('/api/courses');
+  const { data: imagesData } = useApiCache<{
+    home?: { ourCoursesImage?: string };
+  }>('/api/imagens');
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch('/api/courses');
-        if (response.ok) {
-          const data = await response.json();
-          setCourses(data);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar cursos:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+  const ourCoursesImage = imagesData?.home?.ourCoursesImage || '/images/background-6.jpg';
+  const coursesList = Array.isArray(courses) ? courses : [];
 
   return (
     <section id="cursos" className={styles.container}>
@@ -51,10 +38,12 @@ export default function OurCourses() {
         <div className={styles.courses}>
           {loading ? (
             <div style={{ padding: '2rem', textAlign: 'center' }}>Carregando cursos...</div>
-          ) : courses.length === 0 ? (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>Nenhum curso disponível no momento.</div>
+          ) : coursesList.length === 0 ? (
+            <div style={{ padding: '2rem', textAlign: 'center', width: '100%' }}>
+              Nenhum curso disponível no momento.
+            </div>
           ) : (
-            courses.map((course) => (
+            coursesList.map((course) => (
               <CardFlip
                 key={course._id || course.slug}
                 icon={getCourseIcon(course.icon)}
@@ -68,7 +57,7 @@ export default function OurCourses() {
         </div>
       </div>
 
-      <div className={styles.contact}>
+      <div className={styles.contact} style={{ backgroundImage: `url('${ourCoursesImage}')` }} aria-label="Seção de contato">
         <h2>Seja um profissional destacado</h2>
         <h1>{`(19) 9 7410-2924`}</h1>
         <button className={button.primaryAlternative} onClick={() => scrollToSection('contato')}>

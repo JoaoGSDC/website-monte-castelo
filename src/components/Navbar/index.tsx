@@ -8,11 +8,18 @@ import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaMapLocationDot, FaRegMessage, FaBars, FaWhatsapp } from 'react-icons/fa6';
 import { scrollToSection } from '@/utils/scrollToSection';
 import { IoClose } from 'react-icons/io5';
+import { useConfiguracoes } from '@/hooks/useConfiguracoes';
+import { useApiCache } from '@/hooks/useApiCache';
+import { ICourse } from '@/interfaces/course.interface';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { configuracoes, getWhatsAppUrl, formatPhone } = useConfiguracoes();
+  
+  const { data: coursesData } = useApiCache<ICourse[]>('/api/courses');
+  const courses = coursesData?.map((course) => ({ slug: course.slug, title: course.title })) || [];
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -34,6 +41,8 @@ const Navbar = () => {
 
     handleResize(); // Check initial screen size
 
+    // Buscar cursos será feito pelo useApiCache abaixo
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
@@ -50,41 +59,63 @@ const Navbar = () => {
         <div className={styles.optionsContainer}>
           <div className={styles.contact}>
             <FaRegMessage />
-            {`Entre em contato: (19) 9 7410-2924`}
+            {configuracoes.social.whatsapp ? `Entre em contato: ${formatPhone(configuracoes.social.whatsapp)}` : 'Entre em contato'}
           </div>
 
           <div className={styles.address}>
             <FaMapLocationDot />
-            {`R. Laurente Cia, 94, Jd. Porto Real IV, Limeira-SP`}
+            {configuracoes.contato.endereco || 'R. Laurente Cia, 94, Jd. Porto Real IV, Limeira-SP'}
           </div>
         </div>
 
         <div className={styles.optionsContainer}>
           <div className={styles.socialMedia}>
-            <a href="https://www.instagram.com/academiamontecastelooficial/" target="_blank">
-              <FaInstagram />
-            </a>
+            {configuracoes.social.instagram && (
+              <a href={configuracoes.social.instagram} target="_blank" rel="noopener noreferrer">
+                <FaInstagram />
+              </a>
+            )}
 
-            <a href="https://www.facebook.com/academiamontecastelo" target="_blank">
-              <FaFacebook />
-            </a>
+            {configuracoes.social.facebook && (
+              <a href={configuracoes.social.facebook} target="_blank" rel="noopener noreferrer">
+                <FaFacebook />
+              </a>
+            )}
           </div>
 
-          <button>
-            <a
-              href="https://wa.me/5519974102924?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos%20fornecidos%20pela%20Academia%20Monte%20Castelo!"
-              target="_blank"
-            >
-              <FaWhatsapp />
-            </a>
-          </button>
+          {configuracoes.social.whatsapp && (
+            <button>
+              <a
+                href={getWhatsAppUrl('Olá, gostaria de saber mais sobre os cursos fornecidos pela Academia Monte Castelo!')}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp />
+              </a>
+            </button>
+          )}
         </div>
       </div>
 
       <div className={styles.navbarBottom}>
         <div className={styles.optionsContainer}>
           <figure>
-            {!scrolled ? <Image src="/logo.png" alt="logo" fill /> : <Image src="/logo-black.png" alt="logo" fill />}
+            {!scrolled ? (
+              <Image
+                src="/logo.png"
+                alt="Academia Monte Castelo - Logo"
+                fill
+                priority
+                sizes="(max-width: 768px) 120px, 180px"
+              />
+            ) : (
+              <Image
+                src="/logo-black.png"
+                alt="Academia Monte Castelo - Logo"
+                fill
+                sizes="(max-width: 768px) 120px, 180px"
+              />
+            )}
           </figure>
 
           {isMobile ? (
@@ -115,49 +146,11 @@ const Navbar = () => {
                 </a>
 
                 <div className={styles.dropdownContent}>
-                  <Link href="/cursos/armas-nao-letais">
-                    <p>Armas não letais</p>
-                  </Link>
-
-                  <Link href="/cursos/atualizacao-de-vigilantes">
-                    <p>Atualização de Vigilantes</p>
-                  </Link>
-
-                  <Link href="/cursos/atualizacao-escolta-armada">
-                    <p>Atualização Escolta Armada</p>
-                  </Link>
-
-                  <Link href="/cursos/atualizacao-transporte-de-valores">
-                    <p>Atualização Transporte de Valores</p>
-                  </Link>
-
-                  <Link href="/cursos/atualizacao-vssp">
-                    <p>Atualização Segurança Pessoal</p>
-                  </Link>
-
-                  <Link href="/cursos/escolta-armada">
-                    <p>Escolta Armada</p>
-                  </Link>
-
-                  <Link href="/cursos/vssp">
-                    <p>Extensão em Segurança Pessoal</p>
-                  </Link>
-
-                  <Link href="/cursos/formacao-de-vigilantes">
-                    <p>Formação de Vigilantes</p>
-                  </Link>
-
-                  <Link href="/cursos/operador-de-cftv">
-                    <p>Operador de CFTV</p>
-                  </Link>
-
-                  <Link href="/cursos/supervisao-chefia-e-seguranca">
-                    <p>Supervisão, Chefia e Segurança</p>
-                  </Link>
-
-                  <Link href="/cursos/transporte-de-valores">
-                    <p>Transporte de Valores</p>
-                  </Link>
+                  {courses.map((course) => (
+                    <Link key={course.slug} href={`/cursos/${course.slug}`}>
+                      <p>{course.title}</p>
+                    </Link>
+                  ))}
                 </div>
               </div>
 
@@ -228,17 +221,23 @@ const Navbar = () => {
           </a>
 
           <div className={styles.socialMedia}>
-            <a href="https://api.whatsapp.com/send?phone=5519974102924" target="_blank">
-              <FaWhatsapp />
-            </a>
+            {configuracoes.social.whatsapp && (
+              <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer">
+                <FaWhatsapp />
+              </a>
+            )}
 
-            <a href="https://www.instagram.com/academiamontecastelooficial/" target="_blank">
-              <FaInstagram />
-            </a>
+            {configuracoes.social.instagram && (
+              <a href={configuracoes.social.instagram} target="_blank" rel="noopener noreferrer">
+                <FaInstagram />
+              </a>
+            )}
 
-            <a href="https://www.facebook.com/academiamontecastelo" target="_blank">
-              <FaFacebook />
-            </a>
+            {configuracoes.social.facebook && (
+              <a href={configuracoes.social.facebook} target="_blank" rel="noopener noreferrer">
+                <FaFacebook />
+              </a>
+            )}
           </div>
         </div>
       )}

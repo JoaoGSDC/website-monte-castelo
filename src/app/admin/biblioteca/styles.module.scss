@@ -1,6 +1,7 @@
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 40px 32px;
 }
 
 .header {
@@ -8,6 +9,11 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 32px;
+  background: var(--white);
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 
   h1 {
     font-size: 36px;
@@ -23,7 +29,7 @@
     color: var(--text-secondary);
   }
 
-  .uploadButton {
+  .addButton {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -51,69 +57,137 @@
   }
 }
 
-.filesList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 24px;
-}
-
-.fileCard {
+.tableContainer {
   background: var(--white);
   border-radius: 12px;
-  padding: 24px;
+  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  border: 1px solid #e2e8f0;
+}
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
+.table {
+  width: 100%;
+  border-collapse: collapse;
 
-  .fileInfo {
-    flex: 1;
+  thead {
+    background: var(--background-secondary);
 
-    h3 {
-      font-size: 18px;
+    th {
+      padding: 16px;
+      text-align: left;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-
-    p {
+      text-transform: uppercase;
       font-size: 14px;
-      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--border);
     }
   }
 
-  .actions {
-    display: flex;
-    gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: var(--background-secondary);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 16px;
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+  }
+}
+
+.fileName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+
+  .fileIcon {
+    font-size: 20px;
+    color: var(--main);
+    flex-shrink: 0;
   }
 
-  .downloadButton,
-  .deleteButton {
+  span {
+    word-break: break-word;
     flex: 1;
+  }
+
+  .editButton {
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
     border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+
+    &:hover {
+      background: rgba(245, 124, 48, 0.1);
+      color: var(--main);
+      opacity: 1;
+    }
+
+    svg {
+      font-size: 14px;
+    }
+  }
+}
+
+.editName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .nameInput {
+    flex: 1;
+    padding: 6px 12px;
+    border: 2px solid var(--main);
+    border-radius: 6px;
+    font-size: 14px;
     font-family: 'Barlow', sans-serif;
+    color: var(--text-primary);
+
+    &:focus {
+      outline: none;
+      border-color: var(--main);
+    }
   }
 
-  .downloadButton {
+  .saveButton,
+  .cancelButton {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+      font-size: 16px;
+    }
+  }
+
+  .saveButton {
     background: var(--main);
     color: var(--white);
 
@@ -122,24 +196,119 @@
     }
   }
 
-  .deleteButton {
+  .cancelButton {
     background: transparent;
-    border: 2px solid #c33;
-    color: #c33;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
 
     &:hover {
-      background: #fee;
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      border-color: #dc3545;
     }
   }
 }
 
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionButton {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--main);
+    border-color: var(--main);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  input {
+    display: none;
+  }
+
+  svg {
+    font-size: 18px;
+  }
+
+  &.deleteButton {
+    border-color: #dc3545;
+    color: #dc3545;
+
+    &:hover:not(:disabled) {
+      background: #dc3545;
+      border-color: #dc3545;
+      color: var(--white);
+    }
+  }
+}
+
+.orderControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.orderButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--main);
+    border-color: var(--main);
+    color: var(--white);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  svg {
+    font-size: 16px;
+  }
+}
+
+.orderNumber {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 16px;
+  min-width: 24px;
+  text-align: center;
+}
+
 .empty {
   text-align: center;
-  padding: 48px;
+  padding: 64px;
   color: var(--text-tertiary);
-  font-size: 16px;
-  background: var(--white);
-  border-radius: 12px;
+  font-size: 18px;
 }
 
 .loading {
@@ -151,14 +320,99 @@
   color: var(--text-secondary);
 }
 
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    gap: 16px;
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
   }
 
-  .filesList {
-    grid-template-columns: 1fr;
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
   }
 }
 
+.modalInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Barlow', sans-serif;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--main);
+  }
+
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modalCancelButton,
+.modalConfirmButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modalCancelButton {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2px solid var(--border);
+
+  &:hover {
+    background: var(--background-secondary);
+    border-color: var(--text-secondary);
+  }
+}
+
+.modalConfirmButton {
+  background: var(--main);
+  color: var(--white);
+
+  &:hover {
+    background: #e66a20;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 124, 48, 0.3);
+  }
+}

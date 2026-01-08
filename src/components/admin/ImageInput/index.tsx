@@ -8,9 +8,18 @@ interface ImageInputProps {
   onChange: (url: string) => void;
   label?: string;
   required?: boolean;
+  uploadEndpoint?: string; // Endpoint customizado para upload (padrão: '/api/admin/blog/upload-image')
+  defaultValue?: string; // Valor padrão para restaurar
 }
 
-export default function ImageInput({ value, onChange, label = 'Imagem', required = false }: ImageInputProps) {
+export default function ImageInput({ 
+  value, 
+  onChange, 
+  label = 'Imagem', 
+  required = false,
+  uploadEndpoint = '/api/admin/blog/upload-image',
+  defaultValue
+}: ImageInputProps) {
   const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +50,7 @@ export default function ImageInput({ value, onChange, label = 'Imagem', required
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/admin/blog/upload-image', {
+      const response = await fetch(uploadEndpoint, {
         method: 'POST',
         body: formData,
       });
@@ -92,13 +101,25 @@ export default function ImageInput({ value, onChange, label = 'Imagem', required
       </div>
 
       {uploadMode === 'url' ? (
-        <input
-          type="url"
-          value={value}
-          onChange={handleUrlChange}
-          required={required}
-          placeholder="https://exemplo.com/imagem.jpg"
-        />
+        <div className={styles.urlInputContainer}>
+          <input
+            type="text"
+            value={value}
+            onChange={handleUrlChange}
+            required={required}
+            placeholder="https://exemplo.com/imagem.jpg"
+          />
+          {defaultValue && (
+            <button
+              type="button"
+              onClick={() => onChange(defaultValue)}
+              className={styles.defaultButton}
+              title="Restaurar imagem padrão"
+            >
+              Mídia Padrão
+            </button>
+          )}
+        </div>
       ) : (
         <div className={styles.uploadContainer}>
           <input
@@ -109,14 +130,26 @@ export default function ImageInput({ value, onChange, label = 'Imagem', required
             disabled={uploading}
             className={styles.fileInput}
           />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploading}
-            className={styles.uploadButton}
-          >
-            {uploading ? 'Enviando...' : 'Selecionar Imagem'}
-          </button>
+          <div className={styles.uploadActions}>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className={styles.uploadButton}
+            >
+              {uploading ? 'Enviando...' : 'Selecionar Imagem'}
+            </button>
+            {defaultValue && (
+              <button
+                type="button"
+                onClick={() => onChange(defaultValue)}
+                className={styles.defaultButton}
+                title="Restaurar imagem padrão"
+              >
+                Mídia Padrão
+              </button>
+            )}
+          </div>
           {error && <span className={styles.error}>{error}</span>}
         </div>
       )}

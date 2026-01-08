@@ -18,7 +18,9 @@ export async function GET() {
           title: 'seu futuro',
           titleMarked: 'profissional',
           buttonPrimary: 'Nossos cursos',
+          buttonPrimaryLink: '/cursos',
           buttonSecondary: 'Entrar em contato',
+          buttonSecondaryLink: 'https://forms.gle/c3JLdbkw3S5rPWZ39',
         },
         {
           image: '/images/background-4.png',
@@ -26,7 +28,9 @@ export async function GET() {
           title: 'na formação de',
           titleMarked: 'vigilantes',
           buttonPrimary: 'Saiba mais',
+          buttonPrimaryLink: '/cursos',
           buttonSecondary: 'Entrar em contato',
+          buttonSecondaryLink: 'https://forms.gle/c3JLdbkw3S5rPWZ39',
         },
       ]);
     }

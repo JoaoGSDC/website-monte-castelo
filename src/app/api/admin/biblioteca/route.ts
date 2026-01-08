@@ -10,7 +10,24 @@ export async function GET() {
     await requireAuth();
 
     const db = await connectToDatabase();
-    const files = await db.collection('library').find({}).sort({ createdAt: -1 }).toArray();
+    // Buscar arquivos ordenando por campo 'order' se existir, caso contrário por createdAt
+    const files = await db
+      .collection('library')
+      .find({})
+      .sort({ order: 1, createdAt: -1 })
+      .toArray();
+
+    // Se não houver arquivos, retornar um arquivo padrão
+    if (files.length === 0) {
+      return NextResponse.json([
+        {
+          _id: 'default-document',
+          name: 'Documento',
+          url: '/documento.pdf',
+          createdAt: new Date().toISOString(),
+        },
+      ]);
+    }
 
     return NextResponse.json(files);
   } catch (error: any) {
@@ -53,8 +70,9 @@ export async function POST(request: NextRequest) {
 
     // Salvar no banco de dados
     const db = await connectToDatabase();
+    const customName = formData.get('name') as string;
     const libraryFile = {
-      name: file.name,
+      name: customName || file.name,
       url: `/biblioteca/${fileName}`,
       createdAt: new Date().toISOString(),
     };

@@ -26,9 +26,9 @@ export async function POST(request: NextRequest) {
     const db = await connectToDatabase();
     const body = await request.json();
 
-    const { title, slug, subtitle, description, backDescription, video, images } = body;
+    const { title, slug, subtitle, description, backDescription, icon, video, images, aboutCourse, courseInformation, requiredDocuments } = body;
 
-    if (!title || !slug || !subtitle || !description || !backDescription) {
+    if (!title || !slug || !subtitle || !description || !backDescription || !icon || !aboutCourse || !courseInformation || !requiredDocuments) {
       return NextResponse.json({ error: 'Campos obrigatórios faltando' }, { status: 400 });
     }
 
@@ -44,8 +44,12 @@ export async function POST(request: NextRequest) {
       subtitle,
       description,
       backDescription,
+      icon,
       video: video || '',
       images: images || [],
+      aboutCourse,
+      courseInformation,
+      requiredDocuments,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

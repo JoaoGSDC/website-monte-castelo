@@ -109,6 +109,16 @@
 
       li {
         margin-bottom: 8px;
+        list-style-position: outside;
+        
+        p {
+          margin: 0;
+          display: inline;
+        }
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
       blockquote {

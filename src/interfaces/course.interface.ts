@@ -8,6 +8,9 @@ export interface ICourse {
   icon?: string;
   video?: string;
   images?: string[];
+  aboutCourse?: string;
+  courseInformation?: string;
+  requiredDocuments?: string;
   createdAt?: string;
   updatedAt?: string;
 }

@@ -1,16 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 
 interface CarouselItem {
   image: string;
-  hollowText: string;
-  title: string;
-  titleMarked: string;
-  buttonPrimary: string;
-  buttonSecondary: string;
+  hollowText?: string;
+  title?: string;
+  titleMarked?: string;
+  buttonPrimary?: string;
+  buttonPrimaryLink?: string;
+  buttonSecondary?: string;
+  buttonSecondaryLink?: string;
 }
 
 const Carousel = ({ items }: { items: CarouselItem[] }) => {
@@ -24,41 +27,65 @@ const Carousel = ({ items }: { items: CarouselItem[] }) => {
   }, [items.length]);
 
   return (
-    <>
-      <div className={styles.carousel}>
-        {items.map((item, index) => (
-          <div key={index} className={styles.items}>
-            {index === currentIndex && (
-              <div className={styles.carouselContainer}>
+    <section className={styles.carousel} role="region" aria-label="Carrossel de imagens">
+      {items.map((item, index) => (
+        <div key={index} className={styles.items}>
+          {index === currentIndex && (
+            <div className={styles.carouselContainer}>
+              {(item.hollowText || item.title || item.titleMarked || item.buttonPrimary || item.buttonSecondary) && (
                 <div className={styles.container}>
-                  <h1 className={styles.hollowText}>{item.hollowText}</h1>
-                  <h1 className={styles.title}>{item.title}</h1>
-                  <h1 className={styles.titleMarked}>{item.titleMarked}</h1>
-                  <div className={styles.buttonsContainer}>
-                    <Link href="/cursos/armas-nao-letais" className={styles.buttonPrimary}>
-                      {item.buttonPrimary}
-                    </Link>
-                    <Link
-                      href="https://forms.gle/c3JLdbkw3S5rPWZ39"
-                      className={styles.buttonSecondary}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.buttonSecondary}
-                    </Link>
-                  </div>
+                  {item.hollowText && <h1 className={styles.hollowText}>{item.hollowText}</h1>}
+                  {item.title && <h1 className={styles.title}>{item.title}</h1>}
+                  {item.titleMarked && <h1 className={styles.titleMarked}>{item.titleMarked}</h1>}
+                  {(item.buttonPrimary || item.buttonSecondary) && (
+                    <div className={styles.buttonsContainer}>
+                      {item.buttonPrimary && item.buttonPrimaryLink && (
+                        <Link
+                          href={item.buttonPrimaryLink}
+                          className={styles.buttonPrimary}
+                          target={item.buttonPrimaryLink.startsWith('http') ? '_blank' : undefined}
+                          rel={item.buttonPrimaryLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          aria-label={item.buttonPrimary}
+                        >
+                          {item.buttonPrimary}
+                        </Link>
+                      )}
+                      {item.buttonSecondary && item.buttonSecondaryLink && (
+                        <Link
+                          href={item.buttonSecondaryLink}
+                          className={styles.buttonSecondary}
+                          target={item.buttonSecondaryLink.startsWith('http') ? '_blank' : undefined}
+                          rel={item.buttonSecondaryLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          aria-label={item.buttonSecondary}
+                        >
+                          {item.buttonSecondary}
+                        </Link>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+          )}
 
-            <div
-              className={`${styles.slide} ${index === currentIndex ? styles.active : ''}`}
-              style={{ backgroundImage: `url(${item.image})` }}
-            ></div>
+          <div
+            className={`${styles.slide} ${index === currentIndex ? styles.active : ''}`}
+            aria-hidden={index !== currentIndex}
+          >
+            <Image
+              src={item.image}
+              alt={item.title || item.titleMarked || `Imagem do carrossel ${index + 1}`}
+              fill
+              priority={index === 0}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              sizes="100vw"
+              quality={85}
+              style={{ objectFit: 'cover' }}
+            />
           </div>
-        ))}
-      </div>
-    </>
+        </div>
+      ))}
+    </section>
   );
 };
 

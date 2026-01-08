@@ -8,9 +8,13 @@ import Modal from '../Modal';
 import Link from 'next/link';
 import Subtitle from '../Subtitle';
 import Image from 'next/image';
+import { useApiCache } from '@/hooks/useApiCache';
+import { ICourse } from '@/interfaces/course.interface';
 
 const CoursesListModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: coursesData } = useApiCache<ICourse[]>('/api/courses');
+  const courses = coursesData?.map((course) => ({ slug: course.slug, title: course.title })) || [];
 
   useEffect(() => {
     const displayModal = sessionStorage.getItem('courses-list');
@@ -36,77 +40,25 @@ const CoursesListModal = () => {
     <Modal isOpen={isOpen} onClose={onClose} color="var(--text-primary)">
       <div className={styles.container}>
         <figure className={styles.logo}>
-          <Image src="/logo-black.png" alt="logo" fill />
+          <Image
+            src="/logo-black.png"
+            alt="Academia Monte Castelo - Logo"
+            fill
+            sizes="(max-width: 768px) 120px, 180px"
+            loading="eager"
+          />
         </figure>
 
         <Subtitle text="Confira nossos cursos" />
 
         <ul className={styles.leftBar}>
-          <li>
-            <Link href="/cursos/armas-nao-letais" onClick={onClose}>
-              Armas não letais
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/atualizacao-de-vigilantes" onClick={onClose}>
-              Atualização de Vigilantes
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/atualizacao-escolta-armada" onClick={onClose}>
-              Atualização Escolta Armada
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/atualizacao-transporte-de-valores" onClick={onClose}>
-              Atualização Transporte de Valores
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/atualizacao-vssp" onClick={onClose}>
-              Atualização Segurança Pessoal
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/escolta-armada" onClick={onClose}>
-              Escolta Armada
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/vssp" onClick={onClose}>
-              Extensão em Segurança Pessoal
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/formacao-de-vigilantes" onClick={onClose}>
-              Formação de Vigilantes
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/operador-de-cftv" onClick={onClose}>
-              Operador de CFTV
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/supervisao-chefia-e-seguranca" onClick={onClose}>
-              Supervisão, Chefia e Segurança
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/cursos/transporte-de-valores" onClick={onClose}>
-              Transporte de Valores
-            </Link>
-          </li>
+          {courses.map((course) => (
+            <li key={course.slug}>
+              <Link href={`/cursos/${course.slug}`} onClick={onClose}>
+                {course.title}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <button className={button.primaryVariant} type="button" onClick={onClose}>

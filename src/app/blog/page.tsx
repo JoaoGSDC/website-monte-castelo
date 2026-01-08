@@ -8,8 +8,38 @@ import PaginationWrapper from './components/PaginationWrapper';
 import { IPost } from '@/interfaces/post.interface';
 import api from '@/services/api';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://academiamontecastelo.com.br';
+
 export const metadata: Metadata = {
   title: 'Blog',
+  description:
+    'Blog da Academia Monte Castelo: artigos, dicas e informações sobre segurança privada, formação de vigilantes, atualizações da legislação e mercado de trabalho.',
+  keywords: [
+    'blog segurança privada',
+    'artigos vigilantes',
+    'dicas segurança',
+    'legislação vigilante',
+    'mercado segurança privada',
+    'notícias segurança',
+  ],
+  openGraph: {
+    title: 'Blog - Academia Monte Castelo',
+    description:
+      'Artigos, dicas e informações sobre segurança privada, formação de vigilantes e atualizações do setor.',
+    url: `${baseUrl}/blog`,
+    type: 'website',
+    images: [
+      {
+        url: `${baseUrl}/icon512x512.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Blog Academia Monte Castelo',
+      },
+    ],
+  },
+  alternates: {
+    canonical: `${baseUrl}/blog`,
+  },
 };
 
 const fetchPosts = async (search?: string) => {

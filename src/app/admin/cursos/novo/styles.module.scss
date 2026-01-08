@@ -61,6 +61,13 @@
     min-height: 150px;
     font-family: 'Barlow', sans-serif;
   }
+
+  .helpText {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    font-style: italic;
+  }
 }
 
 .actions {

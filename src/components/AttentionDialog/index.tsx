@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import Link from 'next/link';
+import { useConfiguracoes } from '@/hooks/useConfiguracoes';
 
 export default function AttentionDialog() {
   const [open, setOpen] = useState(false);
+  const { configuracoes, getWhatsAppUrl } = useConfiguracoes();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -38,14 +40,16 @@ export default function AttentionDialog() {
           <h3>Entre em contato com a nossa equipe para esclarecer suas dúvidas.</h3>
         </DialogHeader>
 
-        <Link
-          href="https://api.whatsapp.com/send?phone=5519974102924"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.button}
-        >
-          ENTRAR EM CONTATO
-        </Link>
+        {configuracoes.social.whatsapp ? (
+          <Link
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.button}
+          >
+            ENTRAR EM CONTATO
+          </Link>
+        ) : null}
       </DialogContent>
     </Dialog>
   );

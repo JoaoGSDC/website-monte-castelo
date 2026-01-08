@@ -2,54 +2,31 @@ import Link from 'next/link';
 import { RiPoliceBadgeFill } from 'react-icons/ri';
 import styles from './styles.module.scss';
 import Image from 'next/image';
+import connectToDatabase from '@/app/api/utils/dbConnect';
+import { ICourse } from '@/interfaces/course.interface';
 
-const CoursesLeftBar = () => {
+async function getCourses(): Promise<ICourse[]> {
+  try {
+    const db = await connectToDatabase();
+    const courses = await db.collection('courses').find({}).sort({ title: 1 }).toArray();
+    return courses as ICourse[];
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    return [];
+  }
+}
+
+export default async function CoursesLeftBar() {
+  const courses = await getCourses();
+
   return (
     <aside className={styles.leftBarContainer}>
       <ul className={styles.leftBar}>
-        <li>
-          <Link href="/cursos/armas-nao-letais">Armas não letais</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/atualizacao-de-vigilantes">Atualização de Vigilantes</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/atualizacao-escolta-armada">Atualização Escolta Armada</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/atualizacao-transporte-de-valores">Atualização Transporte de Valores</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/atualizacao-vssp">Atualização Segurança Pessoal</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/escolta-armada">Escolta Armada</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/vssp">Extensão em Segurança Pessoal</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/formacao-de-vigilantes">Formação de Vigilantes</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/operador-de-cftv">Operador de CFTV</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/supervisao-chefia-e-seguranca">Supervisão, Chefia e Segurança</Link>
-        </li>
-
-        <li>
-          <Link href="/cursos/transporte-de-valores">Transporte de Valores</Link>
-        </li>
+        {courses.map((course) => (
+          <li key={course._id || course.slug}>
+            <Link href={`/cursos/${course.slug}`}>{course.title}</Link>
+          </li>
+        ))}
       </ul>
 
       <div className={styles.infoContainer}>
@@ -70,11 +47,16 @@ const CoursesLeftBar = () => {
         </a>
 
         <figure>
-          <Image src="/images/blog-cover.png" alt="background" width={400} height={200} />
+          <Image
+            src="/images/blog-cover.png"
+            alt="Cursos da Academia Monte Castelo"
+            width={400}
+            height={200}
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 400px"
+          />
         </figure>
       </div>
     </aside>
   );
-};
-
-export default CoursesLeftBar;
+}

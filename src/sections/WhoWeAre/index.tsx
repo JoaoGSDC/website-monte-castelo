@@ -1,10 +1,19 @@
+'use client';
+
 import Subtitle from '@/components/Subtitle';
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { FaFortAwesome } from 'react-icons/fa6';
+import { useApiCache } from '@/hooks/useApiCache';
 
 const WhoWeAre: React.FC = () => {
+  const { data: imagesData } = useApiCache<{
+    home?: { whoWeAreImage?: string };
+  }>('/api/imagens');
+
+  const imageUrl = imagesData?.home?.whoWeAreImage || '/images/cursos-5.jpeg';
+
   return (
     <section id="quem-somos" className={styles.container}>
       <Subtitle text="Quem somos" />
@@ -15,7 +24,15 @@ const WhoWeAre: React.FC = () => {
           <div className={styles.form} />
 
           <figure>
-            <Image src="/images/cursos-5.jpeg" alt="stand-de-tiro" layout="responsive" width={500} height={300} />
+            <Image
+              src={imageUrl}
+              alt="Estande de tiro indoor automatizado da Academia Monte Castelo"
+              width={500}
+              height={300}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              quality={85}
+            />
           </figure>
         </div>
 

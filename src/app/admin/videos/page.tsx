@@ -1,124 +1,328 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import styles from './styles.module.scss';
-import { FiSave } from 'react-icons/fi';
+import { FiPlus, FiEdit, FiTrash2, FiChevronUp, FiChevronDown, FiSave } from 'react-icons/fi';
+import VideoInput from '@/components/admin/VideoInput';
+import ImageInput from '@/components/admin/ImageInput';
+import DepoimentosEscritosSection from './depoimentos-escritos-section';
 
-interface VideoConfig {
-  videoInstitucional: string;
-  depoimento1: string;
-  depoimento2: string;
-  depoimento3: string;
-  depoimento4: string;
-  video1: string;
+interface Depoimento {
+  video: string;
+  capa: string;
 }
 
-export default function VideosPage() {
+interface VideosConfig {
+  videoInstitucional: string;
+  depoimentos: Depoimento[];
+}
+
+export default function DepoimentosPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState<VideoConfig>({
+  const [reordering, setReordering] = useState(false);
+  const [config, setConfig] = useState<VideosConfig>({
     videoInstitucional: '',
-    depoimento1: '',
-    depoimento2: '',
-    depoimento3: '',
-    depoimento4: '',
-    video1: '',
+    depoimentos: [],
   });
 
   useEffect(() => {
-    fetchVideos();
+    fetchDepoimentos();
   }, []);
 
-  const fetchVideos = async () => {
+  const fetchDepoimentos = async () => {
     try {
       const response = await fetch('/api/admin/videos');
       if (response.ok) {
         const data = await response.json();
-        setFormData(data);
+        setConfig({
+          videoInstitucional: data.videoInstitucional || '',
+          depoimentos: Array.isArray(data.depoimentos) ? data.depoimentos : [],
+        });
       }
     } catch (error) {
-      console.error('Erro ao buscar vídeos:', error);
+      console.error('Erro ao buscar depoimentos:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSaveInstitucional = async () => {
     setSaving(true);
-
     try {
       const response = await fetch('/api/admin/videos', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(config),
       });
 
       if (response.ok) {
-        alert('Vídeos salvos com sucesso!');
+        alert('Vídeo institucional salvo com sucesso!');
       } else {
-        alert('Erro ao salvar vídeos');
+        alert('Erro ao salvar vídeo institucional');
       }
     } catch (error) {
-      console.error('Erro ao salvar vídeos:', error);
-      alert('Erro ao salvar vídeos');
+      console.error('Erro ao salvar vídeo institucional:', error);
+      alert('Erro ao salvar vídeo institucional');
     } finally {
       setSaving(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+  const handleDelete = async (index: number) => {
+    if (!confirm('Tem certeza que deseja remover este depoimento?')) return;
+
+    const newDepoimentos = config.depoimentos.filter((_, i) => i !== index);
+    const newConfig = { ...config, depoimentos: newDepoimentos };
+
+    setSaving(true);
+    try {
+      const response = await fetch('/api/admin/videos', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newConfig),
+      });
+
+      if (response.ok) {
+        setConfig(newConfig);
+        alert('Depoimento removido com sucesso!');
+      } else {
+        alert('Erro ao remover depoimento');
+      }
+    } catch (error) {
+      console.error('Erro ao remover depoimento:', error);
+      alert('Erro ao remover depoimento');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleMoveUp = async (index: number) => {
+    if (index === 0) return;
+
+    const newDepoimentos = [...config.depoimentos];
+    [newDepoimentos[index - 1], newDepoimentos[index]] = [newDepoimentos[index], newDepoimentos[index - 1]];
+
+    setReordering(true);
+    try {
+      const newConfig = { ...config, depoimentos: newDepoimentos };
+      const response = await fetch('/api/admin/videos', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newConfig),
+      });
+
+      if (response.ok) {
+        setConfig(newConfig);
+      } else {
+        alert('Erro ao reordenar depoimento');
+      }
+    } catch (error) {
+      console.error('Erro ao reordenar depoimento:', error);
+      alert('Erro ao reordenar depoimento');
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  const handleMoveDown = async (index: number) => {
+    if (index === config.depoimentos.length - 1) return;
+
+    const newDepoimentos = [...config.depoimentos];
+    [newDepoimentos[index], newDepoimentos[index + 1]] = [newDepoimentos[index + 1], newDepoimentos[index]];
+
+    setReordering(true);
+    try {
+      const newConfig = { ...config, depoimentos: newDepoimentos };
+      const response = await fetch('/api/admin/videos', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newConfig),
+      });
+
+      if (response.ok) {
+        setConfig(newConfig);
+      } else {
+        alert('Erro ao reordenar depoimento');
+      }
+    } catch (error) {
+      console.error('Erro ao reordenar depoimento:', error);
+      alert('Erro ao reordenar depoimento');
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  const handleAdd = async () => {
+    const newDepoimento: Depoimento = {
+      video: '',
+      capa: '',
+    };
+
+    const newDepoimentos = [...config.depoimentos, newDepoimento];
+    const newConfig = { ...config, depoimentos: newDepoimentos };
+
+    setSaving(true);
+    try {
+      const response = await fetch('/api/admin/videos', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newConfig),
+      });
+
+      if (response.ok) {
+        setConfig(newConfig);
+        // Redirecionar para a página de edição do novo depoimento
+        window.location.href = `/admin/videos/${newDepoimentos.length - 1}`;
+      } else {
+        alert('Erro ao adicionar depoimento');
+      }
+    } catch (error) {
+      console.error('Erro ao adicionar depoimento:', error);
+      alert('Erro ao adicionar depoimento');
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (loading) {
     return <div className={styles.loading}>Carregando...</div>;
   }
 
-  const videoFields = [
-    { key: 'videoInstitucional', label: 'Vídeo Institucional' },
-    { key: 'depoimento1', label: 'Depoimento 1' },
-    { key: 'depoimento2', label: 'Depoimento 2' },
-    { key: 'depoimento3', label: 'Depoimento 3' },
-    { key: 'depoimento4', label: 'Depoimento 4' },
-    { key: 'video1', label: 'Vídeo 1' },
-  ] as const;
-
   return (
     <div className={styles.container}>
-      <h1>Gerenciar Vídeos</h1>
-      <p className={styles.subtitle}>Altere os vídeos do website</p>
-
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {videoFields.map((field) => (
-          <div key={field.key} className={styles.formGroup}>
-            <label>{field.label}</label>
-            <input
-              type="url"
-              name={field.key}
-              value={formData[field.key]}
-              onChange={handleChange}
-              placeholder="/videos/video.mp4"
-            />
-            {formData[field.key] && (
-              <div className={styles.preview}>
-                <video src={formData[field.key]} controls style={{ maxWidth: '100%', maxHeight: '200px' }} />
-              </div>
-            )}
-          </div>
-        ))}
-
-        <div className={styles.actions}>
-          <button type="submit" className={styles.submitButton} disabled={saving}>
-            <FiSave />
-            {saving ? 'Salvando...' : 'Salvar Vídeos'}
-          </button>
+      <div className={styles.header}>
+        <div>
+          <h1>Gerenciar Depoimentos</h1>
+          <p>Gerencie os vídeos de depoimentos e o vídeo institucional</p>
         </div>
-      </form>
+        <button onClick={handleAdd} className={styles.addButton}>
+          <FiPlus />
+          Adicionar Depoimento
+        </button>
+      </div>
+
+      {/* Seção Vídeo Institucional */}
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>Vídeo Institucional</h2>
+        </div>
+        <div className={styles.formCard}>
+          <div className={styles.formGroup}>
+            <VideoInput
+              value={config.videoInstitucional}
+              onChange={(url) => setConfig({ ...config, videoInstitucional: url })}
+              label="Vídeo Institucional"
+              uploadEndpoint="/api/admin/cursos/upload-video"
+              defaultValue="/videos/video-institucional.mp4"
+            />
+          </div>
+          <div className={styles.actionsSection}>
+            <button onClick={handleSaveInstitucional} className={styles.submitButton} disabled={saving}>
+              <FiSave />
+              {saving ? 'Salvando...' : 'Salvar Vídeo Institucional'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Listagem de Depoimentos em Vídeo */}
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>Depoimentos em Vídeo</h2>
+        </div>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Ordem</th>
+                <th>Capa</th>
+                <th>Vídeo</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {config.depoimentos.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className={styles.empty}>
+                    Nenhum depoimento cadastrado
+                  </td>
+                </tr>
+              ) : (
+                config.depoimentos.map((depoimento, index) => (
+                  <tr key={index}>
+                    <td>
+                      <div className={styles.orderControls}>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveUp(index)}
+                          disabled={index === 0 || reordering}
+                          className={styles.orderButton}
+                          title="Mover para cima"
+                        >
+                          <FiChevronUp />
+                        </button>
+                        <span className={styles.orderNumber}>{index + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveDown(index)}
+                          disabled={index === config.depoimentos.length - 1 || reordering}
+                          className={styles.orderButton}
+                          title="Mover para baixo"
+                        >
+                          <FiChevronDown />
+                        </button>
+                      </div>
+                    </td>
+                    <td>
+                      {depoimento.capa ? (
+                        <img src={depoimento.capa} alt={`Depoimento ${index + 1}`} className={styles.image} />
+                      ) : (
+                        <span className={styles.noImage}>Sem capa</span>
+                      )}
+                    </td>
+                    <td>
+                      {depoimento.video ? (
+                        <span className={styles.videoUrl}>{depoimento.video.substring(0, 50)}...</span>
+                      ) : (
+                        <span className={styles.noVideo}>Sem vídeo</span>
+                      )}
+                    </td>
+                    <td>
+                      <div className={styles.actions}>
+                        <Link href={`/admin/videos/${index}`} className={styles.actionButton}>
+                          <FiEdit />
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(index)}
+                          className={`${styles.actionButton} ${styles.deleteButton}`}
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Seção Depoimentos Escritos */}
+      <DepoimentosEscritosSection />
     </div>
   );
 }
-

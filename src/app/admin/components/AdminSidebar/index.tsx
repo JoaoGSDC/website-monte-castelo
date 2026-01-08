@@ -12,7 +12,9 @@ import {
   FiBook,
   FiFile,
   FiSliders,
+  FiSettings,
   FiLogOut,
+  FiGlobe,
 } from 'react-icons/fi';
 
 export default function AdminSidebar() {
@@ -31,14 +33,15 @@ export default function AdminSidebar() {
     { href: '/admin/cursos', label: 'Cursos', icon: FiBook },
     { href: '/admin/imagens', label: 'Imagens', icon: FiImage },
     { href: '/admin/carrossel', label: 'Carrossel', icon: FiSliders },
-    { href: '/admin/videos', label: 'Vídeos', icon: FiVideo },
+    { href: '/admin/videos', label: 'Depoimentos', icon: FiVideo },
     { href: '/admin/biblioteca', label: 'Biblioteca', icon: FiFile },
+    { href: '/admin/configuracoes', label: 'Configurações', icon: FiSettings },
   ];
 
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>
-        <Image src="/logo-black.png" alt="Logo" width={180} height={70} />
+        <Image src="/logo.png" alt="Logo" width={180} height={70} />
       </div>
       <nav className={styles.nav}>
         {menuItems.map((item) => {
@@ -50,16 +53,22 @@ export default function AdminSidebar() {
               href={item.href}
               className={`${styles.navItem} ${isActive ? styles.active : ''}`}
             >
-              <Icon />
+              <Icon style={{ stroke: '#ffffff' }} />
               <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
-      <button onClick={handleLogout} className={styles.logoutButton}>
-        <FiLogOut />
-        <span>Sair</span>
-      </button>
+      <div className={styles.footerActions}>
+        <Link href="/" className={styles.websiteButton} target="_blank">
+          <FiGlobe style={{ stroke: '#ffffff' }} />
+          <span>Voltar ao Website</span>
+        </Link>
+        <button onClick={handleLogout} className={styles.logoutButton}>
+          <FiLogOut style={{ stroke: '#ffffff' }} />
+          <span>Sair</span>
+        </button>
+      </div>
     </aside>
   );
 }

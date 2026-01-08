@@ -63,11 +63,41 @@
 
       display: flex;
 
-      ul {
+      a {
+        color: var(--main);
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #e66a20;
+        }
+
+        &.editor-link {
+          color: var(--main);
+          text-decoration: none;
+        }
+      }
+
+      ul, ol {
+        margin: 0 0 16px 0;
+        padding-left: 24px;
+        list-style-position: outside;
+        
         li {
+          margin-bottom: 8px;
+          
+          p {
+            margin: 0;
+            display: inline;
+          }
+          
           a {
             margin-left: 0.5rem;
             color: var(--main);
+          }
+          
+          &:last-child {
+            margin-bottom: 0;
           }
         }
       }

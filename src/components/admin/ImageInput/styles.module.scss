@@ -41,23 +41,50 @@
     }
   }
 
-  input[type="url"] {
-    padding: 12px 16px;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: 'Barlow', sans-serif;
-    color: var(--text-primary);
-    background: var(--white);
-    transition: all 0.3s ease;
+  .urlInputContainer {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
 
-    &:focus {
-      outline: none;
-      border-color: var(--main);
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Barlow', sans-serif;
+      color: var(--text-primary);
+      background: var(--white);
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--main);
+      }
+
+      &::placeholder {
+        color: var(--text-tertiary);
+      }
     }
 
-    &::placeholder {
-      color: var(--text-tertiary);
+    .defaultButton {
+      padding: 12px 20px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Barlow', sans-serif;
+      white-space: nowrap;
+
+      &:hover {
+        border-color: var(--main);
+        background: var(--main);
+        color: var(--white);
+      }
     }
   }
 
@@ -70,7 +97,14 @@
       display: none;
     }
 
+    .uploadActions {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+
     .uploadButton {
+      flex: 1;
       padding: 12px 16px;
       border: 2px solid var(--border);
       border-radius: 8px;
@@ -92,6 +126,26 @@
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+      }
+    }
+
+    .defaultButton {
+      padding: 12px 20px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Barlow', sans-serif;
+      white-space: nowrap;
+
+      &:hover {
+        border-color: var(--main);
+        background: var(--main);
+        color: var(--white);
       }
     }
 

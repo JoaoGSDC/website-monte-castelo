@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
-import { ObjectId } from 'mongodb';
 
 interface DepoimentoEscrito {
   _id?: string;
@@ -49,7 +48,7 @@ export async function GET() {
       ];
 
       // Inserir os depoimentos padrão no banco
-      const result = await db.collection('depoimentos-escritos').insertMany(depoimentosPadrao);
+      await db.collection('depoimentos-escritos').insertMany(depoimentosPadrao);
       
       // Buscar novamente para retornar com os _id gerados
       const depoimentosInseridos = await db

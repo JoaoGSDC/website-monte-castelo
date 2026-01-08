@@ -5,7 +5,6 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 import { FiPlus, FiEdit, FiTrash2, FiChevronUp, FiChevronDown, FiSave } from 'react-icons/fi';
 import VideoInput from '@/components/admin/VideoInput';
-import ImageInput from '@/components/admin/ImageInput';
 import DepoimentosEscritosSection from './depoimentos-escritos-section';
 
 interface Depoimento {

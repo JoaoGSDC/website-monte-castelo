@@ -7,11 +7,6 @@ interface Depoimento {
   capa: string;
 }
 
-interface VideosConfig {
-  videoInstitucional: string;
-  depoimentos: Depoimento[];
-}
-
 export async function GET() {
   try {
     await requireAuth();

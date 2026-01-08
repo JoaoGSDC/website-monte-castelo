@@ -46,20 +46,19 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   }
 
   // Extrair texto do HTML para descrição
-  const textContent = post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || post.description || '';
-  ('');
+  const textContent = post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || post.excerpt || '';
 
   return {
     title: post.title,
     description: textContent,
-    keywords: post.tags || [],
+    keywords: [],
     openGraph: {
       title: post.title,
       description: textContent,
       url: `${baseUrl}/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.createdAt,
-      modifiedTime: post.updatedAt,
+      modifiedTime: post.createdAt,
       authors: ['Academia Monte Castelo'],
       images: [
         {
@@ -96,10 +95,10 @@ export default async function BlogPost({ params }: any) {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.description || post.content?.replace(/<[^>]*>/g, '').substring(0, 200),
+    description: post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 200),
     image: post.image?.startsWith('http') ? post.image : `${baseUrl}${post.image}`,
     datePublished: post.createdAt,
-    dateModified: post.updatedAt || post.createdAt,
+    dateModified: post.createdAt,
     author: {
       '@type': 'Organization',
       name: 'Academia Monte Castelo',

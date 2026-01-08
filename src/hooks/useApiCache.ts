@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface CacheOptions {
   ttl?: number; // Time to live in milliseconds (default: 1 hour)
@@ -17,7 +17,7 @@ function getCacheKey(url: string): string {
   return `${CACHE_PREFIX}${url}`;
 }
 
-function isExpired(entry: CacheEntry<any>, ttl: number): boolean {
+function isExpired<T>(entry: CacheEntry<T>, ttl: number): boolean {
   return Date.now() - entry.timestamp > ttl;
 }
 
@@ -81,7 +81,7 @@ export function useApiCache<T>(
   const [error, setError] = useState<Error | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     // Cancel previous request if it exists
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -111,9 +111,10 @@ export function useApiCache<T>(
       if (useSessionStorage) {
         setCachedData(url, jsonData);
       }
-    } catch (err: any) {
-      if (err.name !== 'AbortError') {
-        setError(err);
+    } catch (err) {
+      const errorObj = err instanceof Error ? err : new Error('Unknown error');
+      if (errorObj.name !== 'AbortError') {
+        setError(errorObj);
         
         // Try to use cached data as fallback
         if (useSessionStorage) {
@@ -128,7 +129,7 @@ export function useApiCache<T>(
       setLoading(false);
       abortControllerRef.current = null;
     }
-  };
+  }, [url, ttl, useSessionStorage]);
 
   useEffect(() => {
     // Only fetch if we don't have cached data
@@ -141,7 +142,7 @@ export function useApiCache<T>(
         abortControllerRef.current.abort();
       }
     };
-  }, [url]);
+  }, [data, fetchData]);
 
   const refetch = () => {
     if (useSessionStorage && typeof window !== 'undefined') {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 import { FiX, FiPlus } from 'react-icons/fi';
 
@@ -64,8 +65,9 @@ export default function ImagesCarouselInput({
 
       const data = await response.json();
       onChange([...value, data.url]);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao fazer upload da imagem');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao fazer upload da imagem';
+      setError(errorMessage);
     } finally {
       setUploading(false);
       if (fileInputRef.current) {
@@ -200,7 +202,15 @@ export default function ImagesCarouselInput({
         <div className={styles.imagesList}>
           {value.map((url, index) => (
             <div key={index} className={styles.imageItem}>
-              <img src={url} alt={`Carrossel ${index + 1}`} onError={() => setError('Erro ao carregar imagem')} />
+              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                <Image
+                  src={url}
+                  alt={`Carrossel ${index + 1}`}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  unoptimized
+                />
+              </div>
               <button
                 type="button"
                 onClick={() => handleRemoveImage(index)}

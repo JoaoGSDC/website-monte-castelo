@@ -62,8 +62,9 @@ export default function VideoInput({
 
       const data = await response.json();
       onChange(data.url);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao fazer upload do vídeo');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao fazer upload do vídeo';
+      setError(errorMessage);
     } finally {
       setUploading(false);
       if (fileInputRef.current) {

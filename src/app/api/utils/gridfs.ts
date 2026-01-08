@@ -78,21 +78,16 @@ export async function deleteFromGridFS(fileId: ObjectId | string): Promise<void>
   const bucket = await getGridFSBucket();
   const objectId = typeof fileId === 'string' ? new ObjectId(fileId) : fileId;
 
-  return new Promise((resolve, reject) => {
-    bucket.delete(objectId, (error) => {
-      if (error) {
-        // Ignorar erro se arquivo não existir (código de erro do MongoDB)
-        const errorMessage = error.message || String(error);
-        if (errorMessage.includes('FileNotFound') || errorMessage.includes('not found')) {
-          resolve(); // Arquivo já não existe, considerar sucesso
-        } else {
-          reject(error);
-        }
-      } else {
-        resolve();
-      }
-    });
-  });
+  try {
+    await bucket.delete(objectId);
+  } catch (error: any) {
+    // Ignorar erro se arquivo não existir (código de erro do MongoDB)
+    const errorMessage = error?.message || String(error || '');
+    if (errorMessage.includes('FileNotFound') || errorMessage.includes('not found')) {
+      return; // Arquivo já não existe, considerar sucesso
+    }
+    throw error; // Re-lançar outros erros
+  }
 }
 
 /**

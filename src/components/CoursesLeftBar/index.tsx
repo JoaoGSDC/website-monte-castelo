@@ -9,7 +9,24 @@ async function getCourses(): Promise<ICourse[]> {
   try {
     const db = await connectToDatabase();
     const courses = await db.collection('courses').find({}).sort({ title: 1 }).toArray();
-    return courses as ICourse[];
+    
+    // Mapear documentos do MongoDB para ICourse[]
+    return courses.map((course: any) => ({
+      _id: course._id?.toString() || '',
+      title: course.title || '',
+      slug: course.slug || '',
+      subtitle: course.subtitle || '',
+      description: course.description || '',
+      backDescription: course.backDescription || '',
+      icon: course.icon || '',
+      video: course.video || '',
+      images: course.images || [],
+      aboutCourse: course.aboutCourse || '',
+      courseInformation: course.courseInformation || '',
+      requiredDocuments: course.requiredDocuments || '',
+      createdAt: course.createdAt || '',
+      updatedAt: course.updatedAt || '',
+    })) as ICourse[];
   } catch (error) {
     console.error('Error fetching courses:', error);
     return [];

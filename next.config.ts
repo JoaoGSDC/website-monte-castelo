@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
     // Use o hash do commit ou timestamp
     return process.env.BUILD_ID || 'build-' + Date.now();
   },
+  // Externalize heavy packages to reduce serverless function size
+  serverExternalPackages: ['mongodb', 'mongoose', 'firebase-admin', 'nodemailer'],
 };
 
 export default nextConfig;

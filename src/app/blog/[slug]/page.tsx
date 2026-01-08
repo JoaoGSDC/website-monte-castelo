@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
 
   // Extrair texto do HTML para descrição
   const textContent = post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || post.description || '';
+  ('');
 
   return {
     title: post.title,
@@ -120,10 +121,7 @@ export default async function BlogPost({ params }: any) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema) }} />
       <div className={styles.container}>
         <BlogHeader />
 

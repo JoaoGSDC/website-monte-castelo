@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
-import { unlink } from 'fs/promises';
-import { join } from 'path';
+import { deleteFromGridFS } from '../../../utils/gridfs';
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
@@ -47,13 +46,13 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
     // Buscar arquivo
     const file = await db.collection('library').findOne({ _id: new ObjectId(id) });
 
-    if (file) {
-      // Remover arquivo físico
+    if (file && file.fileId) {
+      // Remover arquivo do GridFS
       try {
-        const filePath = join(process.cwd(), 'public', file.url);
-        await unlink(filePath);
+        await deleteFromGridFS(file.fileId);
       } catch (error) {
-        console.error('Erro ao remover arquivo físico:', error);
+        console.error('Erro ao remover arquivo do GridFS:', error);
+        // Continuar mesmo se houver erro ao remover do GridFS
       }
     }
 

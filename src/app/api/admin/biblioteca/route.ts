@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadToGridFS } from '../../utils/gridfs';
 
 export async function GET() {
   try {
@@ -57,23 +55,21 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Criar diretório se não existir
-    const uploadDir = join(process.cwd(), 'public', 'biblioteca');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
-    // Salvar arquivo
+    // Gerar nome único para o arquivo
     const fileName = `${Date.now()}-${file.name}`;
-    const filePath = join(uploadDir, fileName);
-    await writeFile(filePath, buffer);
+
+    // Upload para GridFS
+    const fileId = await uploadToGridFS(buffer, fileName, file.type, {
+      category: 'biblioteca',
+    });
 
     // Salvar no banco de dados
     const db = await connectToDatabase();
     const customName = formData.get('name') as string;
     const libraryFile = {
       name: customName || file.name,
-      url: `/biblioteca/${fileName}`,
+      fileId: fileId.toString(), // Armazenar ObjectId como string
+      url: `/api/files/${fileId.toString()}`, // URL da API de download
       createdAt: new Date().toISOString(),
     };
 

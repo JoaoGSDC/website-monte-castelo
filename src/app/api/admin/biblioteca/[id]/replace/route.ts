@@ -2,14 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
-import { writeFile, mkdir, unlink } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadToGridFS, deleteFromGridFS } from '../../../../utils/gridfs';
 
-export async function PUT(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
+export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth();
 
@@ -39,38 +34,31 @@ export async function PUT(
       return NextResponse.json({ error: 'Arquivo não encontrado' }, { status: 404 });
     }
 
-    // Remover arquivo antigo se existir
-    if (existingFile.url && existingFile.url !== '/documento.pdf') {
+    // Remover arquivo antigo do GridFS se existir
+    if (existingFile.fileId && existingFile.url !== '/documento.pdf') {
       try {
-        const oldFilePath = join(process.cwd(), 'public', existingFile.url);
-        if (existsSync(oldFilePath)) {
-          await unlink(oldFilePath);
-        }
+        await deleteFromGridFS(existingFile.fileId);
       } catch (error) {
-        console.error('Erro ao remover arquivo antigo:', error);
+        console.error('Erro ao remover arquivo antigo do GridFS:', error);
         // Continuar mesmo se houver erro ao remover o arquivo antigo
       }
     }
 
-    // Criar diretório se não existir
-    const uploadDir = join(process.cwd(), 'public', 'biblioteca');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
-    // Salvar novo arquivo
+    // Upload novo arquivo para GridFS
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const fileName = `${Date.now()}-${file.name}`;
-    const filePath = join(uploadDir, fileName);
-    await writeFile(filePath, buffer);
+    const newFileId = await uploadToGridFS(buffer, fileName, file.type, {
+      category: 'biblioteca',
+    });
 
     // Atualizar no banco de dados
-    const newUrl = `/biblioteca/${fileName}`;
+    const newUrl = `/api/files/${newFileId.toString()}`;
     await db.collection('library').updateOne(
       { _id: new ObjectId(id) },
       {
         $set: {
+          fileId: newFileId.toString(),
           url: newUrl,
           updatedAt: new Date().toISOString(),
         },

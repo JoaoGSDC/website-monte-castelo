@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadToGridFS } from '../../../utils/gridfs';
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 
@@ -33,23 +31,18 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Criar diretório se não existir
-    const uploadDir = join(process.cwd(), 'public', 'course-videos');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
     // Gerar nome único para o arquivo
     const timestamp = Date.now();
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const fileName = `${timestamp}-${sanitizedName}`;
-    const filePath = join(uploadDir, fileName);
 
-    // Salvar arquivo
-    await writeFile(filePath, buffer);
+    // Upload para GridFS
+    const fileId = await uploadToGridFS(buffer, fileName, file.type, {
+      category: 'course-videos',
+    });
 
-    // Retornar URL do vídeo
-    const videoUrl = `/course-videos/${fileName}`;
+    // Retornar URL da API de download
+    const videoUrl = `/api/files/${fileId.toString()}`;
 
     return NextResponse.json({ url: videoUrl });
   } catch (error: any) {

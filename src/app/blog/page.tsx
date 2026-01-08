@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from 'next';
 import styles from './styles.module.scss';
 import BlogHeader from './components/BlogHeader';

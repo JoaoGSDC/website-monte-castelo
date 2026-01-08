@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MongoClient, Db } from 'mongodb';
 
 let cachedDb: Db;

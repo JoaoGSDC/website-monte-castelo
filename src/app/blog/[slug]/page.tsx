@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import styles from './styles.module.scss';

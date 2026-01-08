@@ -10,7 +10,7 @@ export async function GET() {
 
     return NextResponse.json(posts, {
       headers: {
-        'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600', // Cache por 30 minutos
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300', // Cache curto para atualizações rápidas
       },
     });
   } catch (error) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
+import { noCacheHeaders, getCacheInvalidationHeaders } from '../../utils/cache';
 
 export async function GET() {
   try {
@@ -33,10 +34,14 @@ export async function GET() {
           logo: '/logo.png',
           logoBlack: '/logo-black.png',
         },
+      }, {
+        headers: noCacheHeaders,
       });
     }
 
-    return NextResponse.json(config.data);
+    return NextResponse.json(config.data, {
+      headers: noCacheHeaders,
+    });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
@@ -59,7 +64,10 @@ export async function PUT(request: NextRequest) {
       { upsert: true }
     );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: true },
+      { headers: getCacheInvalidationHeaders(['images', 'config']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

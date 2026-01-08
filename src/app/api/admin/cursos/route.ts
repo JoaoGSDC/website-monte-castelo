@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
+import { noCacheHeaders, getCacheInvalidationHeaders } from '../../utils/cache';
 
 export async function GET() {
   try {
@@ -9,7 +10,9 @@ export async function GET() {
     const db = await connectToDatabase();
     const courses = await db.collection('courses').find({}).sort({ createdAt: -1 }).toArray();
 
-    return NextResponse.json(courses);
+    return NextResponse.json(courses, {
+      headers: noCacheHeaders,
+    });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
@@ -56,7 +59,10 @@ export async function POST(request: NextRequest) {
 
     const result = await db.collection('courses').insertOne(course);
 
-    return NextResponse.json({ _id: result.insertedId, ...course });
+    return NextResponse.json(
+      { _id: result.insertedId, ...course },
+      { headers: getCacheInvalidationHeaders(['courses']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

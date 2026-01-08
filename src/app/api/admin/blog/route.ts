@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
+import { getCacheInvalidationHeaders } from '../../utils/cache';
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,7 +36,10 @@ export async function POST(request: NextRequest) {
 
     const result = await db.collection('posts').insertOne(post);
 
-    return NextResponse.json({ _id: result.insertedId, ...post });
+    return NextResponse.json(
+      { _id: result.insertedId, ...post },
+      { headers: getCacheInvalidationHeaders(['posts']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

@@ -60,8 +60,9 @@
       row-gap: 1rem;
       display: flex;
       flex-direction: column;
-
-      display: flex;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
 
       a {
         color: var(--main);
@@ -107,9 +108,67 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      margin-top: 2rem;
+      box-sizing: border-box;
 
       .carousel {
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        // Garantir que o CarouselContent respeite a largura
+        :global([data-slot="carousel-content"]) {
+          max-width: 100% !important;
+          width: 100% !important;
+          overflow: hidden;
+          box-sizing: border-box;
+          
+          > div {
+            max-width: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box;
+            margin-left: 0 !important; // Remover padding negativo do Embla
+          }
+        }
+
+        :global([data-slot="carousel-item"]) {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box;
+          padding-left: 0 !important; // Remover padding do CarouselItem
+          
+          > div {
+            max-width: 100% !important;
+            width: 100% !important;
+            overflow: hidden;
+            box-sizing: border-box;
+            // Forçar aspect-video (16:9) - altura máxima baseada na largura
+            aspect-ratio: 16 / 9;
+            max-height: 675px; // altura máxima para evitar que cresça demais (1200px * 9/16)
+            
+            figure {
+              max-width: 100% !important;
+              width: 100% !important;
+              overflow: hidden;
+              height: 100%;
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+            }
+
+            // Garantir que a imagem Next.js respeite o container
+            :global(img) {
+              max-width: 100% !important;
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: cover;
+              box-sizing: border-box;
+            }
+          }
+        }
       }
     }
   }
@@ -146,6 +205,8 @@
       .carouselContainer {
         .carousel {
           width: 100%;
+          max-width: 100%;
+          overflow: hidden;
         }
       }
     }

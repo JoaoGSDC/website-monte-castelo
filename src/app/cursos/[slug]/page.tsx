@@ -14,12 +14,12 @@ async function getCourse(slug: string): Promise<ICourse | null> {
   try {
     const db = await connectToDatabase();
     const course = await db.collection('courses').findOne({ slug });
-    
+
     if (!course) {
       return null;
     }
 
-    return course as ICourse;
+    return course as unknown as ICourse;
   } catch (error) {
     console.error('Error fetching course:', error);
     return null;
@@ -37,20 +37,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://academiamontecastelo.com.br';
-  const courseImage = course.images && course.images.length > 0 
-    ? (course.images[0].startsWith('http') ? course.images[0] : `${baseUrl}${course.images[0]}`)
-    : `${baseUrl}/icon512x512.png`;
+  const courseImage =
+    course.images && course.images.length > 0
+      ? course.images[0].startsWith('http')
+        ? course.images[0]
+        : `${baseUrl}${course.images[0]}`
+      : `${baseUrl}/icon512x512.png`;
 
   return {
     title: `${course.title} - Academia Monte Castelo`,
-    description: course.description || `Curso de ${course.title} oferecido pela Academia Monte Castelo. Formação profissional credenciada pela Polícia Federal.`,
-    keywords: [
-      course.title,
-      'curso vigilante',
-      'formação segurança',
-      'academia monte castelo',
-      'curso credenciado',
-    ],
+    description:
+      course.description ||
+      `Curso de ${course.title} oferecido pela Academia Monte Castelo. Formação profissional credenciada pela Polícia Federal.`,
+    keywords: [course.title, 'curso vigilante', 'formação segurança', 'academia monte castelo', 'curso credenciado'],
     openGraph: {
       title: `${course.title} - Academia Monte Castelo`,
       description: course.description || `Curso profissional de ${course.title}`,
@@ -103,9 +102,12 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     },
     courseCode: course.slug,
     url: `${baseUrl}/cursos/${course.slug}`,
-    image: images.length > 0 
-      ? (images[0].startsWith('http') ? images[0] : `${baseUrl}${images[0]}`)
-      : `${baseUrl}/icon512x512.png`,
+    image:
+      images.length > 0
+        ? images[0].startsWith('http')
+          ? images[0]
+          : `${baseUrl}${images[0]}`
+        : `${baseUrl}/icon512x512.png`,
     ...(course.video && {
       video: {
         '@type': 'VideoObject',
@@ -116,10 +118,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.headerText}>
@@ -158,18 +157,19 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             {images.length > 0 && (
               <div className={styles.carouselContainer}>
                 <div className={styles.carousel}>
-                  <Carousel className="w-full">
-                    <CarouselContent>
+                  <Carousel className="w-full max-w-full">
+                    <CarouselContent className="w-full max-w-full">
                       {images.map((image, index) => (
-                        <CarouselItem key={index}>
-                          <div className="relative w-full aspect-video">
-                            <figure className="w-full h-full">
+                        <CarouselItem key={index} className="basis-full max-w-full">
+                          <div className="relative w-full aspect-video max-w-full overflow-hidden">
+                            <figure className="relative w-full h-full m-0 max-w-full">
                               <Image
                                 src={image}
                                 alt={`${course.title} - Imagem ${index + 1}`}
                                 fill
                                 className="object-cover rounded-lg"
-                                sizes="100vw"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+                                priority={index === 0}
                               />
                             </figure>
                           </div>

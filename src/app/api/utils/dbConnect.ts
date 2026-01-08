@@ -2,13 +2,21 @@ import { MongoClient, Db } from 'mongodb';
 
 let cachedDb: Db;
 
-async function connectToDatabase() {
+async function connectToDatabase(): Promise<Db> {
   try {
     if (cachedDb) {
       return cachedDb;
     }
 
-    const client = await MongoClient.connect(process.env.MONGODB_URI as string);
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI environment variable is not set');
+    }
+
+    if (!process.env.MONGODB_DB) {
+      throw new Error('MONGODB_DB environment variable is not set');
+    }
+
+    const client = await MongoClient.connect(process.env.MONGODB_URI);
 
     const db = client.db(process.env.MONGODB_DB);
     cachedDb = db;
@@ -17,7 +25,8 @@ async function connectToDatabase() {
 
     return db;
   } catch (error: any) {
-    return error;
+    console.error('MongoDB Connection Error:', error);
+    throw error; // Lançar erro ao invés de retornar
   }
 }
 

@@ -3,6 +3,7 @@ import connectToDatabase from '../../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
 import { deleteFromGridFS } from '../../../utils/gridfs';
+import { getCacheInvalidationHeaders } from '../../../utils/cache';
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
@@ -21,7 +22,10 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
       { $set: { name: body.name, updatedAt: new Date().toISOString() } }
     );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: true },
+      { headers: getCacheInvalidationHeaders(['biblioteca', 'library']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
@@ -59,7 +63,10 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
     // Remover do banco de dados
     await db.collection('library').deleteOne({ _id: new ObjectId(id) });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: true },
+      { headers: getCacheInvalidationHeaders(['biblioteca', 'library']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

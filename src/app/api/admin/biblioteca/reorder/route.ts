@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
+import { getCacheInvalidationHeaders } from '../../../utils/cache';
 
 export async function PUT(request: NextRequest) {
   try {
@@ -23,7 +24,10 @@ export async function PUT(request: NextRequest) {
 
     await Promise.all(updatePromises);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: true },
+      { headers: getCacheInvalidationHeaders(['biblioteca', 'library']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

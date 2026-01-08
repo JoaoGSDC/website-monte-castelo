@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
+import { noCacheHeaders, getCacheInvalidationHeaders } from '../../utils/cache';
+import { deleteFilesByUrls, filterGridFSUrls } from '../../utils/gridfs-cleanup';
 
 export async function GET() {
   try {
@@ -32,10 +34,14 @@ export async function GET() {
           buttonSecondary: 'Entrar em contato',
           buttonSecondaryLink: 'https://forms.gle/c3JLdbkw3S5rPWZ39',
         },
-      ]);
+      ], {
+        headers: noCacheHeaders,
+      });
     }
 
-    return NextResponse.json(config.data);
+    return NextResponse.json(config.data, {
+      headers: noCacheHeaders,
+    });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
@@ -52,13 +58,36 @@ export async function PUT(request: NextRequest) {
     const db = await connectToDatabase();
     const body = await request.json();
 
+    // Buscar configuração existente para comparar imagens
+    const existingConfig = await db.collection('config').findOne({ type: 'carousel' });
+    
+    if (existingConfig && existingConfig.data && Array.isArray(existingConfig.data)) {
+      // Coletar URLs antigas de imagens que não serão mais usadas
+      const oldImageUrls: string[] = [];
+      const existingImages = existingConfig.data.map((item: any) => item.image).filter(Boolean);
+      const newImages = (body || []).map((item: any) => item.image).filter(Boolean);
+      
+      // Encontrar imagens removidas
+      const removedImages = existingImages.filter((img: string) => !newImages.includes(img));
+      oldImageUrls.push(...removedImages);
+
+      // Deletar arquivos GridFS que não são mais utilizados
+      const gridFSUrls = filterGridFSUrls(oldImageUrls);
+      if (gridFSUrls.length > 0) {
+        await deleteFilesByUrls(gridFSUrls);
+      }
+    }
+
     await db.collection('config').updateOne(
       { type: 'carousel' },
       { $set: { type: 'carousel', data: body, updatedAt: new Date().toISOString() } },
       { upsert: true }
     );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: true },
+      { headers: getCacheInvalidationHeaders(['carousel', 'config']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

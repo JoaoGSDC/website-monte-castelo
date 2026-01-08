@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { uploadToGridFS } from '../../utils/gridfs';
+import { noCacheHeaders, getCacheInvalidationHeaders } from '../../utils/cache';
 
 export async function GET() {
   try {
@@ -24,10 +25,14 @@ export async function GET() {
           url: '/documento.pdf',
           createdAt: new Date().toISOString(),
         },
-      ]);
+      ], {
+        headers: noCacheHeaders,
+      });
     }
 
-    return NextResponse.json(files);
+    return NextResponse.json(files, {
+      headers: noCacheHeaders,
+    });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
@@ -75,7 +80,10 @@ export async function POST(request: NextRequest) {
 
     const result = await db.collection('library').insertOne(libraryFile);
 
-    return NextResponse.json({ _id: result.insertedId, ...libraryFile });
+    return NextResponse.json(
+      { _id: result.insertedId, ...libraryFile },
+      { headers: getCacheInvalidationHeaders(['biblioteca', 'library']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

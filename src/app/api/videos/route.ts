@@ -12,7 +12,7 @@ export async function GET() {
     const config = await db.collection('config').findOne({ type: 'videos' });
 
     const cacheHeaders = {
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
     };
 
     if (!config) {

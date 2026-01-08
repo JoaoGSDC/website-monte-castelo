@@ -3,6 +3,7 @@ import connectToDatabase from '../../../../utils/dbConnect';
 import { requireAuth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
 import { uploadToGridFS, deleteFromGridFS } from '../../../../utils/gridfs';
+import { getCacheInvalidationHeaders } from '../../../../utils/cache';
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
@@ -65,7 +66,10 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
       }
     );
 
-    return NextResponse.json({ success: true, url: newUrl });
+    return NextResponse.json(
+      { success: true, url: newUrl },
+      { headers: getCacheInvalidationHeaders(['biblioteca', 'library']) }
+    );
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });

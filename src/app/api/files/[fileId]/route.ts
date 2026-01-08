@@ -35,7 +35,8 @@ export async function GET(
     // Converter stream para buffer
     const chunks: Buffer[] = [];
     for await (const chunk of fileStream) {
-      chunks.push(chunk);
+      // Garantir que o chunk seja um Buffer
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
     }
     const buffer = Buffer.concat(chunks);
 

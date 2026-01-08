@@ -39,7 +39,18 @@ const getLatestPosts = async (): Promise<IPost[]> => {
     const db = await connectToDatabase();
     const posts = await db.collection('posts').find({}).sort({ createdAt: -1 }).limit(3).toArray();
     
-    return (posts as IPost[]) || [];
+    // Mapear documentos do MongoDB para IPost[]
+    return posts.map((post: any) => ({
+      _id: post._id?.toString() || '',
+      title: post.title || '',
+      slug: post.slug || '',
+      content: post.content || '',
+      image: post.image || '',
+      category: post.category || '',
+      excerpt: post.excerpt || '',
+      author: post.author || '',
+      createdAt: post.createdAt || '',
+    })) as IPost[];
   } catch (error: any) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error fetching latest posts:', error?.message || error);

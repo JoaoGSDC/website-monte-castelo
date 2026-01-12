@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
-import { FiX, FiPlus } from 'react-icons/fi';
+import { FiX, FiPlus, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 
 interface ImagesCarouselInputProps {
   value: string[];
@@ -88,6 +88,20 @@ export default function ImagesCarouselInput({
     onChange(newImages);
   };
 
+  const handleMoveUp = (index: number) => {
+    if (index === 0) return;
+    const newImages = [...value];
+    [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+    onChange(newImages);
+  };
+
+  const handleMoveDown = (index: number) => {
+    if (index === value.length - 1) return;
+    const newImages = [...value];
+    [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+    onChange(newImages);
+  };
+
   const handleAddDefaultImages = () => {
     if (defaultImages && defaultImages.length > 0) {
       // Adiciona apenas as imagens padrão que ainda não estão na lista
@@ -132,8 +146,8 @@ export default function ImagesCarouselInput({
         <div className={styles.urlInputContainer}>
           <input
             type="text"
-            value={urlInput}
-            onChange={(e) => setUrlInput(e.target.value)}
+            value={urlInput || ''}
+            onChange={(e) => setUrlInput(e.target.value || '')}
             placeholder="https://exemplo.com/imagem.jpg"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
@@ -211,13 +225,36 @@ export default function ImagesCarouselInput({
                   unoptimized
                 />
               </div>
-              <button
-                type="button"
-                onClick={() => handleRemoveImage(index)}
-                className={styles.removeButton}
-              >
-                <FiX />
-              </button>
+              <div className={styles.imageControls}>
+                <div className={styles.orderControls}>
+                  <button
+                    type="button"
+                    onClick={() => handleMoveUp(index)}
+                    disabled={index === 0}
+                    className={styles.orderButton}
+                    title="Mover para cima"
+                  >
+                    <FiChevronUp />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleMoveDown(index)}
+                    disabled={index === value.length - 1}
+                    className={styles.orderButton}
+                    title="Mover para baixo"
+                  >
+                    <FiChevronDown />
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className={styles.removeButton}
+                  title="Remover imagem"
+                >
+                  <FiX />
+                </button>
+              </div>
             </div>
           ))}
         </div>

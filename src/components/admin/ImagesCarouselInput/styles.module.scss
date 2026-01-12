@@ -57,7 +57,7 @@
     flex-direction: column;
     gap: 8px;
 
-    input[type="text"] {
+    input[type='text'] {
       flex: 1;
       padding: 12px 16px;
       border: 2px solid var(--border);
@@ -221,26 +221,89 @@
       display: block;
     }
 
-    .removeButton {
+    .imageControls {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(220, 53, 69, 0.9);
-      color: white;
-      border: none;
+      top: 2px;
+      left: 0px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      z-index: 10;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .orderControls {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 6px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .orderButton {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: var(--white);
+      color: var(--text-primary);
+      border: 2px solid var(--border);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       font-size: 18px;
+      padding: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      &:hover:not(:disabled) {
+        background: var(--main);
+        border-color: var(--main);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(245, 124, 48, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: var(--white);
+        color: var(--text-tertiary);
+      }
+
+      svg {
+        font-size: 18px;
+      }
+    }
+
+    .removeButton {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: rgba(220, 53, 69, 0.95);
+      color: white;
+      border: 2px solid rgba(220, 53, 69, 1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      font-size: 18px;
+      padding: 0;
+      box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
 
       &:hover {
         background: rgba(220, 53, 69, 1);
-        transform: scale(1.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+      }
+
+      svg {
+        font-size: 18px;
       }
     }
   }
